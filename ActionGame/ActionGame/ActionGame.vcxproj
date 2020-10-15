@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Header\Function.cpp" />
     <ClCompile Include="Script\Header\Player.cpp" />
     <ClCompile Include="Script\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Header\Common.h" />
+    <ClInclude Include="Script\Header\Function.h" />
     <ClInclude Include="Script\Header\Player.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

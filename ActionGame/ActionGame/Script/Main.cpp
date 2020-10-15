@@ -1,4 +1,3 @@
-#include "DxLib.h"
 #include "Header/Common.h"
 
 // ƒQ[ƒ€ˆ—
