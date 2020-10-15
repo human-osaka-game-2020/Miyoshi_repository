@@ -1,5 +1,4 @@
-#include "DxLib.h"
-#include "Header/Common.h"
+#include "Script/Header/Common.h"
 
 // ゲーム処理
 void GameProcessing();
@@ -11,9 +10,8 @@ Player player;
 // プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-
-	SetGraphMode(1280, 720, 32, 60);
-	ChangeWindowMode(true); // ウィンドウモードに変更
+	SetGraphMode ( WINDOW_WIDTH, WINDOW_HEIGHT, 32, 60 );
+	ChangeWindowMode ( true ); // ウィンドウモードに変更
 
 	if (DxLib_Init() == -1)	// ＤＸライブラリ初期化処理
 	{
@@ -46,11 +44,14 @@ void GameProcessing() {
 
 void DrawProcessing() {
 
-	// 画面を初期化
-	ClearDrawScreen();
-
-	player.Draw();
-
-	// 裏画面の内容を表画面にコピーする
-	ScreenFlip();
+	if ( fadeMode == Mode_FadeIn ) {
+		if ( FadeIn ( 255 / 60, COLOR_BLUE ) ) {
+			fadeMode = Mode_FadeNone;
+		}
+	}
+	else if ( fadeMode == Mode_FadeOut ) {
+		if ( FadeOut ( 255 / 60, COLOR_RED, 90 ) ) {
+			fadeMode = Mode_FadeNone;
+		}
+	}
 }
