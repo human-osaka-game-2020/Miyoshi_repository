@@ -14,7 +14,6 @@ bool Fade(FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime
 	}
 
 	if ( fademode == Mode_FadeIn ) {
-		fadePower *= -1;
 		if ( alpha == ALPHA_MAX ) {
 			DrawBox ( 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, fadeColor, true );
 			waitTimeCount++;
@@ -28,7 +27,7 @@ bool Fade(FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime
 	DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, fadeColor, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	alpha += fadePower;
+	alpha = ( fademode == Mode_FadeIn ) ? alpha - fadePower : alpha + fadePower;
 
 	if ( alpha < ALPHA_MIN || alpha > ALPHA_MAX ) {
 		if ( fademode == Mode_FadeOut ) {
@@ -41,6 +40,8 @@ bool Fade(FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime
 		waitTimeCount = 0;
 		return true;
 	}
+
+	return false;
 }
 
 bool FadeIn(unsigned int fadePower, int fadeColor, int waitTime ) {

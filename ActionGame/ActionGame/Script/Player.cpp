@@ -4,6 +4,7 @@ Player::Player() {
 	pos_x = WINDOW_WIDTH / 2;
 	pos_y = WINDOW_HEIGHT / 2;
 	movingSpeed = 1;
+	playerGHandle = 0;
 }
 
 Player::~Player() {
