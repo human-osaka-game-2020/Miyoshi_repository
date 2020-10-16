@@ -1,19 +1,35 @@
 #include "Common.h"
 
-void FadeIn(float fadePower, int fadeColor) {
-	if (fadePower < 0) {
-		fadePower *= -1;
+bool FadeIn(unsigned int fadePower, int waitTime, int fadeColor) {
+	static int alpha = 0;
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+	if (fadeColor != NULL) {
+		DrawBox(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, fadeColor, true);
 	}
+	alpha += fadePower;
+	if (alpha > 256) {
+		alpha = 0;
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+		WaitTimer(waitTime);
+		return true;
+	}
+	return false;
 }
 
-void FadeOut(float fadePower, int fadeColor) {
-	if (fadePower < 0) {
-		fadePower *= -1;
+bool FadeOut(unsigned int fadePower, int waitTime, int fadeColor) {
+	static int alpha = 256;
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+	if (fadeColor != NULL) {
+		DrawBox(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, fadeColor, true);
 	}
-}
+	alpha -= fadePower;
+	if (alpha < 0) {
+		alpha = 256;
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-void ColorFade(float fadePower, int startColor, int endColor) {
-	if (fadePower < 0) {
-		fadePower *= -1;
+		WaitTimer(waitTime);
+		return true;
 	}
+	return false;
 }

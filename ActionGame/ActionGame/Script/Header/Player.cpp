@@ -2,8 +2,8 @@
 #include "Common.h"
 
 Player::Player() {
-	pos_x = 640;
-	pos_y = 360;
+	pos_x = SCREEN_WIDTH / 2;
+	pos_y = SCREEN_HEIGHT / 2;
 	movingSpeed = 1;
 }
 

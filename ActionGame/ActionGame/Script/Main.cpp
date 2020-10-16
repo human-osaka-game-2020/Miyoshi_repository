@@ -25,6 +25,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// メインループ
 	while (true)
 	{
+		// 画面を初期化
+		ClearDrawScreen();
+
 		GameProcessing();
 		DrawProcessing();
 
@@ -32,6 +35,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (ProcessMessage() < 0) break;
 		// もしＥＳＣキーが押されていたらループから抜ける
 		if (CheckHitKey(KEY_INPUT_ESCAPE)) break;
+
+		// 裏画面の内容を表画面にコピーする
+		ScreenFlip();
 	}
 
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
@@ -44,12 +50,5 @@ void GameProcessing() {
 }
 
 void DrawProcessing() {
-
-	// 画面を初期化
-	ClearDrawScreen();
-
 	player.Draw();
-
-	// 裏画面の内容を表画面にコピーする
-	ScreenFlip();
 }
