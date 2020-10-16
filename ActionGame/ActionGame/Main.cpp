@@ -4,6 +4,8 @@
 // プログラムは WinMain から始まります
 int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 {
+	SetOutApplicationLogValidFlag( false );
+
 	SetGraphMode ( WINDOW_WIDTH, WINDOW_HEIGHT, 32, 60 );
 	ChangeWindowMode ( true ); // ウィンドウモードに変更
 
@@ -21,21 +23,24 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		// 画面を初期化
 		ClearDrawScreen();
 
+		if( UpdateKeyState() != 0 ) break;
+		if( UpdateMouseButtonState() != 0 ) break;
+
 		SceneBase::CreateScene();
 		SceneBase::ExecuteScene();
 		SceneBase::ReleaseCurrentScene();
 
 		// -1 が返ってきたらループを抜ける
-		if ( ProcessMessage () < 0 ) break;
+		if( ProcessMessage() < 0 ) break;
 		// もしＥＳＣキーが押されていたらループから抜ける
-		if ( CheckHitKey ( KEY_INPUT_ESCAPE ) ) break;
+		if( CheckHitKey( KEY_INPUT_ESCAPE ) ) break;
 
 		// 裏画面の内容を表画面にコピーする
-		ScreenFlip ();
+		ScreenFlip();
 	}
 
 	SceneBase::ReleaseScene();
-	DxLib_End ();				// ＤＸライブラリ使用の終了処理
+	DxLib_End();				// ＤＸライブラリ使用の終了処理
 
 	return 0;					// ソフトの終了
 }
