@@ -7,7 +7,7 @@ enum FadeMode {
 };
 
 /// <summary>
-/// フェードイン
+/// フェードイン/アウト
 /// </summary>
 /// <param name="fademode">フェードの種類</param>
 /// <param name="fadePower">フェードの速さ</param>
