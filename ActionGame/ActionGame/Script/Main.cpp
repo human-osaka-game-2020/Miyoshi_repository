@@ -47,6 +47,30 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 void GameProcessing() {
 	player.Moving();
+
+	static bool isFadeInEnd = true;
+	if (isFadeInEnd == false) {
+		if (Fade(FadeIn, 1, 0, COLOR_WHITE)) {
+			isFadeInEnd = true;
+		}
+	}
+	else {
+		if (CheckHitKey(KEY_INPUT_SPACE)) {
+			isFadeInEnd = false;
+		}
+	}
+
+	static bool isFadeOutEnd = true;
+	if (isFadeOutEnd == false) {
+		if (Fade(FadeOut, 1, 0, COLOR_BLUE)) {
+			isFadeOutEnd = true;
+		}
+	}
+	else {
+		if (CheckHitKey(KEY_INPUT_RETURN)) {
+			isFadeOutEnd = false;
+		}
+	}
 }
 
 void DrawProcessing() {
