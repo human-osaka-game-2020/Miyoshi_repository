@@ -1,9 +1,25 @@
+﻿
 #ifndef COMMON_H
 #define COMMON_H
+
+#include <iostream>
+#include <vector>
 
 #include "DxLib.h"
 #include "Player.h"
 #include "Function.h"
+
+#include "SceneBase.h"
+#include "TitleScene.h"
+#include "GameScene.h"
+#include "ResultScene.h"
+
+// シーンの一覧
+enum SceneList {
+	Title,	// タイトル画面
+	OnPlay,	// ゲーム中の画面
+	Result	// リザルト画面
+};
 
 const int WINDOW_WIDTH = 1280;
 const int WINDOW_HEIGHT = 720;

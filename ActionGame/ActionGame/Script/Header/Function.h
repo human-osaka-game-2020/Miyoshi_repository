@@ -1,38 +1,40 @@
+ï»¿
 #ifndef FUNCTION_H
 #define FUNCTION_H
 
+// ãƒ•ã‚§ãƒ¼ãƒ‰ã®çŠ¶æ…‹
 enum FadeMode {
-	Mode_FadeNone,
-	Mode_FadeIn,
-	Mode_FadeOut
+	None,	// ãƒ•ã‚§ãƒ¼ãƒ‰ãªã—
+	In,	// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ä¸­
+	Out	// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆä¸­
 };
 
 /// <summary>
-/// ƒtƒF[ƒhˆ—‚Ì’†g
+/// ãƒ•ã‚§ãƒ¼ãƒ‰å‡¦ç†ã®ä¸­èº«
 /// </summary>
-/// <param name="fademode">ƒtƒF[ƒh‚Ìí—Ş</param>
-/// <param name="fadePower">ƒtƒF[ƒh‚Ì‘¬‚³</param>
-/// <param name="fadeColor">ƒtƒF[ƒh‚·‚éF</param>
-/// <param name="waitTime">ƒtƒF[ƒh‚Ì‘Ò‚¿ŠÔ(ƒtƒŒ[ƒ€)</param>
-/// <returns>true == ˆ—I—¹, false == ˆ—’†</returns>
+/// <param name="fademode">ãƒ•ã‚§ãƒ¼ãƒ‰ã®ç¨®é¡</param>
+/// <param name="fadePower">ãƒ•ã‚§ãƒ¼ãƒ‰ã®é€Ÿã•</param>
+/// <param name="fadeColor">ãƒ•ã‚§ãƒ¼ãƒ‰ã™ã‚‹è‰²</param>
+/// <param name="waitTime">ãƒ•ã‚§ãƒ¼ãƒ‰ã®å¾…ã¡æ™‚é–“(ãƒ•ãƒ¬ãƒ¼ãƒ )</param>
+/// <returns>true == å‡¦ç†çµ‚äº†, false == å‡¦ç†ä¸­</returns>
 bool Fade( FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime );
 
 /// <summary>
-/// ƒtƒF[ƒhƒCƒ“
+/// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
 /// </summary>
-/// <param name="fadePower">ƒtƒF[ƒh‚Ì‘¬‚³</param>
-/// <param name="fadeColor">ƒtƒF[ƒhƒCƒ“‚·‚é‘O‚ÌF</param>
-/// <param name="waitTime">ƒtƒF[ƒh‚ªn‚Ü‚é‘O‚É‘Ò‚ÂŠÔ(ƒtƒŒ[ƒ€)</param>
-/// <returns>true == ˆ—I—¹, false == ˆ—’†</returns>
+/// <param name="fadePower">ãƒ•ã‚§ãƒ¼ãƒ‰ã®é€Ÿã•</param>
+/// <param name="fadeColor">ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã™ã‚‹å‰ã®è‰²</param>
+/// <param name="waitTime">ãƒ•ã‚§ãƒ¼ãƒ‰ãŒå§‹ã¾ã‚‹å‰ã«å¾…ã¤æ™‚é–“(ãƒ•ãƒ¬ãƒ¼ãƒ )</param>
+/// <returns>true == å‡¦ç†çµ‚äº†, false == å‡¦ç†ä¸­</returns>
 bool FadeIn( unsigned int fadePower, int fadeColor = GetColor( 0, 0, 0 ), int waitTime = 0 );
 
 /// <summary>
-/// ƒtƒF[ƒhƒAƒEƒg
+/// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
 /// </summary>
-/// <param name="fadePower">ƒtƒF[ƒh‚Ì‘¬‚³</param>
-/// <param name="fadeColor">ƒtƒF[ƒhƒAƒEƒg‚µ‚½Œã‚ÌF</param>
-/// <param name="waitTime">ƒtƒF[ƒh‚ªI‚í‚Á‚½Œã‚É‘Ò‚ÂŠÔ(ƒtƒŒ[ƒ€)</param>
-/// <returns>true == ˆ—I—¹, false == ˆ—’†</returns>
+/// <param name="fadePower">ãƒ•ã‚§ãƒ¼ãƒ‰ã®é€Ÿã•</param>
+/// <param name="fadeColor">ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã—ãŸå¾Œã®è‰²</param>
+/// <param name="waitTime">ãƒ•ã‚§ãƒ¼ãƒ‰ãŒçµ‚ã‚ã£ãŸå¾Œã«å¾…ã¤æ™‚é–“(ãƒ•ãƒ¬ãƒ¼ãƒ )</param>
+/// <returns>true == å‡¦ç†çµ‚äº†, false == å‡¦ç†ä¸­</returns>
 bool FadeOut( unsigned int fadePower, int fadeColor = GetColor( 0, 0, 0 ), int waitTime = 0 );
 
 #endif // !FUNCTION_H
