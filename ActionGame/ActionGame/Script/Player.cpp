@@ -1,29 +1,31 @@
+﻿
 #include "Header/Common.h"
 
+int Player::pos_x = WINDOW_WIDTH / 2;
+int Player::pos_y = WINDOW_HEIGHT / 2;
+int Player::speed = 1;
+
 Player::Player() {
-	pos_x = WINDOW_WIDTH / 2;
-	pos_y = WINDOW_HEIGHT / 2;
-	movingSpeed = 1;
-	playerGHandle = 0;
+
 }
 
 Player::~Player() {
 
 }
 
-void Player::Moving() {
+void Player::Move() {
 	if (CheckHitKey(KEY_INPUT_UP)) {
-		Player::pos_y -= movingSpeed;
+		pos_y -= speed;
 	}
 	else if (CheckHitKey(KEY_INPUT_DOWN)) {
-		Player::pos_y += movingSpeed;
+		pos_y += speed;
 	}
 
 	if (CheckHitKey(KEY_INPUT_RIGHT)) {
-		Player::pos_x += movingSpeed;
+		pos_x += speed;
 	}
 	else if (CheckHitKey(KEY_INPUT_LEFT)) {
-		Player::pos_x -= movingSpeed;
+		pos_x -= speed;
 	}
 }
 

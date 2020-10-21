@@ -1,6 +1,7 @@
+﻿
 #include "Header/Common.h"
 
-bool Fade(FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime ) {
+bool Fade( FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime ) {
 
 	const int ALPHA_MAX = 255;
 	const int ALPHA_MIN = 0;
@@ -10,10 +11,10 @@ bool Fade(FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime
 	static int waitTimeCount = 0;
 
 	if ( alpha == ALPHA_INVALID ) {
-		alpha = ( fademode == Mode_FadeIn ) ? ALPHA_MAX : ALPHA_MIN;
+		alpha = ( fademode == FadeMode::In ) ? ALPHA_MAX : ALPHA_MIN;
 	}
 
-	if ( fademode == Mode_FadeIn ) {
+	if ( fademode == FadeMode::In ) {
 		if ( alpha == ALPHA_MAX ) {
 			DrawBox ( 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, fadeColor, true );
 			waitTimeCount++;
@@ -27,10 +28,10 @@ bool Fade(FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime
 	DrawBox(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, fadeColor, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	alpha = ( fademode == Mode_FadeIn ) ? alpha - fadePower : alpha + fadePower;
+	alpha = ( fademode == FadeMode::In ) ? alpha - fadePower : alpha + fadePower;
 
 	if ( alpha < ALPHA_MIN || alpha > ALPHA_MAX ) {
-		if ( fademode == Mode_FadeOut ) {
+		if ( fademode == FadeMode::Out ) {
 			waitTimeCount++;
 			if ( waitTime > waitTimeCount ) {
 				return false;
@@ -45,9 +46,9 @@ bool Fade(FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime
 }
 
 bool FadeIn(unsigned int fadePower, int fadeColor, int waitTime ) {
-	return Fade ( Mode_FadeIn, fadePower, fadeColor, waitTime ) ? true : false;
+	return Fade ( FadeMode::In, fadePower, fadeColor, waitTime ) ? true : false;
 }
 
 bool FadeOut(unsigned int fadePower, int fadeColor, int waitTime ) {
-	return Fade ( Mode_FadeOut, fadePower, fadeColor, waitTime ) ? true : false;
+	return Fade ( FadeMode::Out, fadePower, fadeColor, waitTime ) ? true : false;
 }

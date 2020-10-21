@@ -9,9 +9,14 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="シーン">
+      <UniqueIdentifier>{e980be75-f9a8-4d59-b731-712a43d55aa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シーン\ヘッダ">
+      <UniqueIdentifier>{d988b358-09be-4c5d-b0bd-21338f88e081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シーン\ソース">
+      <UniqueIdentifier>{9a8477db-52fa-4f8c-befd-7fc43250a8cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -24,6 +29,18 @@
     <ClCompile Include="Script\Player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Script\GameScene.cpp">
+      <Filter>シーン\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\ResultScene.cpp">
+      <Filter>シーン\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\SceneBase.cpp">
+      <Filter>シーン\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\TitleScene.cpp">
+      <Filter>シーン\ソース</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Header\Function.h">
@@ -34,6 +51,18 @@
     </ClInclude>
     <ClInclude Include="Script\Header\Common.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\GameScene.h">
+      <Filter>シーン\ヘッダ</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\ResultScene.h">
+      <Filter>シーン\ヘッダ</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\SceneBase.h">
+      <Filter>シーン\ヘッダ</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Header\TitleScene.h">
+      <Filter>シーン\ヘッダ</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

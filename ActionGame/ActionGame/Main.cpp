@@ -1,76 +1,41 @@
+ï»¿
 #include "Script/Header/Common.h"
 
-// ƒQ[ƒ€ˆ—
-void GameProcessing ();
-// •`‰æˆ—
-void DrawProcessing ();
-
-Player player;
-
-FadeMode fadeMode = Mode_FadeNone;
-
-// ƒvƒƒOƒ‰ƒ€‚Í WinMain ‚©‚çn‚Ü‚è‚Ü‚·
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã¯ WinMain ã‹ã‚‰å§‹ã¾ã‚Šã¾ã™
 int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 {
-
 	SetGraphMode ( WINDOW_WIDTH, WINDOW_HEIGHT, 32, 60 );
-	ChangeWindowMode ( true ); // ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚É•ÏX
+	ChangeWindowMode ( true ); // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰ã«å¤‰æ›´
 
-	if ( DxLib_Init () == -1 )	// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»ˆ—
+	if ( DxLib_Init () == -1 )	// ï¼¤ï¼¸ãƒ©ã‚¤ãƒ–ãƒ©ãƒªåˆæœŸåŒ–å‡¦ç†
 	{
-		return -1; // ƒGƒ‰[‚ª‹N‚«‚½‚ç’¼‚¿‚ÉI—¹
+		return -1; // ã‚¨ãƒ©ãƒ¼ãŒèµ·ããŸã‚‰ç›´ã¡ã«çµ‚äº†
 	}
 
-	// ƒOƒ‰ƒtƒBƒbƒN‚Ì•`‰ææ‚ğ— ‰æ–Ê‚ÉƒZƒbƒg
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã®æç”»å…ˆã‚’è£ç”»é¢ã«ã‚»ãƒƒãƒˆ
 	SetDrawScreen ( DX_SCREEN_BACK );
 
-	// ƒƒCƒ“ƒ‹[ƒv
+	// ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
 	while ( true )
 	{
-		// ‰æ–Ê‚ğ‰Šú‰»
-		ClearDrawScreen ();
+		// ç”»é¢ã‚’åˆæœŸåŒ–
+		ClearDrawScreen();
 
-		GameProcessing ();
-		DrawProcessing ();
+		SceneBase::CreateScene();
+		SceneBase::ExecuteScene();
+		SceneBase::ReleaseCurrentScene();
 
-		// -1 ‚ª•Ô‚Á‚Ä‚«‚½‚çƒ‹[ƒv‚ğ”²‚¯‚é
+		// -1 ãŒè¿”ã£ã¦ããŸã‚‰ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 		if ( ProcessMessage () < 0 ) break;
-		// ‚à‚µ‚d‚r‚bƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚çƒ‹[ƒv‚©‚ç”²‚¯‚é
+		// ã‚‚ã—ï¼¥ï¼³ï¼£ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ãŸã‚‰ãƒ«ãƒ¼ãƒ—ã‹ã‚‰æŠœã‘ã‚‹
 		if ( CheckHitKey ( KEY_INPUT_ESCAPE ) ) break;
 
-		// — ‰æ–Ê‚Ì“à—e‚ğ•\‰æ–Ê‚ÉƒRƒs[‚·‚é
+		// è£ç”»é¢ã®å†…å®¹ã‚’è¡¨ç”»é¢ã«ã‚³ãƒ”ãƒ¼ã™ã‚‹
 		ScreenFlip ();
 	}
 
-	DxLib_End ();				// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠg—p‚ÌI—¹ˆ—
+	SceneBase::ReleaseScene();
+	DxLib_End ();				// ï¼¤ï¼¸ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä½¿ç”¨ã®çµ‚äº†å‡¦ç†
 
-	return 0;					// ƒ\ƒtƒg‚ÌI—¹
-}
-
-void GameProcessing () {
-	player.Moving();
-
-	if ( fadeMode == Mode_FadeNone ) {
-		if ( CheckHitKey( KEY_INPUT_SPACE ) ) {
-			fadeMode = Mode_FadeIn;
-		}
-		else if ( CheckHitKey( KEY_INPUT_RETURN ) ) {
-			fadeMode = Mode_FadeOut;
-		}
-	}
-}
-
-void DrawProcessing() {
-	player.Draw();
-
-	if ( fadeMode == Mode_FadeIn ) {
-		if ( FadeIn( 255 / 60, COLOR_BLUE, 30 ) ) {
-			fadeMode = Mode_FadeNone;
-		}
-	}
-	else if ( fadeMode == Mode_FadeOut ) {
-		if ( FadeOut( 255 / 60, COLOR_RED, 90 ) ) {
-			fadeMode = Mode_FadeNone;
-		}
-	}
+	return 0;					// ã‚½ãƒ•ãƒˆã®çµ‚äº†
 }
