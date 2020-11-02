@@ -8,9 +8,10 @@ enum FadeMode {
 };
 
 enum InputState {
-	Input_NotPressed = 0,
-	Input_Pressed = 1,
-	Input_Released = -1
+	Input_Invalid = -2,
+	Input_Released,
+	Input_NotPressed,
+	Input_Pressed
 };
 
 // マウスボタンの入力状態を調べる範囲
@@ -59,6 +60,18 @@ int UpdateKeyState();
 int GetKeyStatus( int keyCode );
 
 /// <summary>
+/// キーの入力を無視する
+/// </summary>
+/// <param name="keyCode">入力を無視したいキーのキーコード</param>
+void KeyInputInvaliding( int keyCode );
+
+/// <summary>
+/// キーの入力を有効にする
+/// </summary>
+/// <param name="keyCode">入力を有効にしたいキーのキーコード</param>
+void KeyInputActivating( int keyCode );
+
+/// <summary>
 /// マウスボタンの入力状態を更新する
 /// :毎フレーム呼び出す
 /// </summary>
@@ -71,5 +84,17 @@ int UpdateMouseButtonState();
 /// <param name="mouseButtonCode">入力状態を取得したいマウスボタンのコード</param>
 /// <returns></returns>
 int GetMouseButtonStatus( int mouseButtonCode );
+
+/// <summary>
+/// マウスボタンの入力を無視する
+/// </summary>
+/// <param name="mouseButtonCode">入力を無視したいマウスボタンのコード</param>
+void MouseButtonInputInvaliding( int mouseButtonCode );
+
+/// <summary>
+/// マウスボタンの入力を有効にする
+/// </summary>
+/// <param name="mouseButtonCode">入力を有効にしたいマウスボタンのコード</param>
+void MouseButtonInputActivating( int mouseButtonCode );
 
 #endif // !FUNCTION_H

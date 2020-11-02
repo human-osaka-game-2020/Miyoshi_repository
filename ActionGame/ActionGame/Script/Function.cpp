@@ -65,16 +65,18 @@ int UpdateKeyState() {
 	}
 
 	for ( int i = 0; i < 256; i++ ) {
-		if ( keyState[i] == -1 ) {
-			keyState[i] = 0;
-		}
-		
-		if (currentKeyState[i] == 1) {
-			keyState[i]++;
-		}
-		else {
-			if ( keyState[i] != 0 ) {
-				keyState[i] = -1;
+		if ( keyState[i] != Input_Invalid ) {
+			if ( keyState[i] == Input_Released ) {
+				keyState[i] = Input_NotPressed;
+			}
+
+			if ( currentKeyState[i] == Input_Pressed ) {
+				keyState[i]++;
+			}
+			else {
+				if ( keyState[i] != Input_NotPressed ) {
+					keyState[i] = Input_Released;
+				}
 			}
 		}
 	}
@@ -86,6 +88,14 @@ int GetKeyStatus( int keyCode ){
 	return keyState[keyCode];
 }
 
+void KeyInputInvaliding( int keyCode ) {
+	keyState[keyCode] = Input_Invalid;
+}
+
+void KeyInputActivating( int keyCode ) {
+	keyState[keyCode] = Input_NotPressed;
+}
+
 int UpdateMouseButtonState() {
 	char currentMouseState[MOUSEBUTTON_UPDATE_RANGE];
 
@@ -93,19 +103,19 @@ int UpdateMouseButtonState() {
 		currentMouseState[i] = (GetMouseInput() & i);
 	}
 
-	MOUSE_INPUT_LEFT;
-
 	for ( int i = 0; i < MOUSEBUTTON_UPDATE_RANGE; i++ ) {
-		if ( mouseState[i] == -1 ) {
-			mouseState[i] = 0;
-		}
+		if ( mouseState[i] != Input_Invalid ) {
+			if ( mouseState[i] == Input_Released ) {
+				mouseState[i] = Input_NotPressed;
+			}
 
-		if ( currentMouseState[i] != 0 ) {
-			mouseState[i]++;
-		}
-		else {
-			if ( mouseState[i] != 0 ) {
-				mouseState[i] = -1;
+			if ( currentMouseState[i] == Input_Pressed ) {
+				mouseState[i]++;
+			}
+			else {
+				if ( mouseState[i] != Input_NotPressed ) {
+					mouseState[i] = Input_Released;
+				}
 			}
 		}
 	}
@@ -115,4 +125,12 @@ int UpdateMouseButtonState() {
 
 int GetMouseButtonStatus( int mouseButtonCode ) {
 	return mouseState[mouseButtonCode];
+}
+
+void MouseButtonInputInvaliding( int mouseButtonCode ) {
+	mouseState[mouseButtonCode] = Input_Invalid;
+}
+
+void MouseButtonInputActivating( int mouseButtonCode ) {
+	mouseState[mouseButtonCode] = Input_NotPressed;
 }

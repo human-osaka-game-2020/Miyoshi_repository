@@ -50,7 +50,10 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 void GameProcessing () {
 	player.Moving();
 
-	if ( GetKeyStatus( KEY_INPUT_A ) == Input_NotPressed ) {
+	if ( GetKeyState( KEY_INPUT_A ) == Input_Invalid ) {
+		DrawString( 10, 100, "“ü—Í‚Í–³Œø", COLOR_WHITE );
+	}
+	else if ( GetKeyStatus( KEY_INPUT_A ) == Input_NotPressed ) {
 		DrawString( 10, 100, "‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢", COLOR_WHITE );
 	}
 	else if ( GetKeyStatus( KEY_INPUT_A ) == Input_Pressed ) {
@@ -63,7 +66,10 @@ void GameProcessing () {
 		DrawFormatString( 10, 100, COLOR_BLUE, "‰Ÿ‚³‚ê‚Ä‚¢‚é : %d ƒtƒŒ[ƒ€", GetKeyStatus(KEY_INPUT_A) );
 	}
 
-	if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == Input_NotPressed ) {
+	if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == Input_Invalid ) {
+		DrawString( 10, 300, "“ü—Í‚Í–³Œø", COLOR_WHITE );
+	}
+	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == Input_NotPressed ) {
 		DrawString( 10, 300, "‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢", COLOR_WHITE );
 	}
 	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == Input_Pressed ) {
