@@ -25,7 +25,7 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	SetDrawScreen ( DX_SCREEN_BACK );
 
 	// メインループ
-	while ( true )
+	while ( UpdateKeyState() == 0 )
 	{
 		// 画面を初期化
 		ClearDrawScreen ();
@@ -57,6 +57,19 @@ void GameProcessing () {
 		else if ( CheckHitKey( KEY_INPUT_RETURN ) ) {
 			fadeMode = Mode_FadeOut;
 		}
+	}
+
+	if ( GetKeyStatus( KEY_INPUT_A ) == 0 ) {
+		DrawString( 10, 100, "押されていない", COLOR_WHITE );
+	}
+	else if ( GetKeyStatus( KEY_INPUT_A ) == 1 ) {
+		DrawString( 1000, 100, "押された", COLOR_GREEN );
+	}
+	else if ( GetKeyStatus( KEY_INPUT_A ) == -1 ) {
+		DrawString( 1000, 100, "離された", COLOR_RED );
+	}
+	else {
+		DrawFormatString( 10, 100, COLOR_BLUE, "押されている : %d フレーム", GetKeyStatus(KEY_INPUT_A) );
 	}
 }
 

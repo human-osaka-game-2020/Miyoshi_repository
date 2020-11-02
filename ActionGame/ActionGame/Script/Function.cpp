@@ -1,5 +1,8 @@
 #include "Header/Common.h"
 
+// キーが何フレーム入力されているか保存する
+int keyState[256];
+
 bool Fade(FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime ) {
 
 	const int ALPHA_MAX = 255;
@@ -50,4 +53,33 @@ bool FadeIn(unsigned int fadePower, int fadeColor, int waitTime ) {
 
 bool FadeOut(unsigned int fadePower, int fadeColor, int waitTime ) {
 	return Fade ( Mode_FadeOut, fadePower, fadeColor, waitTime ) ? true : false;
+}
+
+int UpdateKeyState() {
+	char currentKeyState[256];
+
+	if ( GetHitKeyStateAll( currentKeyState ) != 0 ) {
+		return -1;
+	}
+
+	for ( int i = 0; i < 256; i++ ) {
+		if ( keyState[i] == -1 ) {
+			keyState[i] = 0;
+		}
+		
+		if (currentKeyState[i] == 1) {
+			keyState[i]++;
+		}
+		else {
+			if ( keyState[i] != 0 ) {
+				keyState[i] = -1;
+			}
+		}
+	}
+
+	return 0;
+}
+
+int GetKeyStatus( int keyCode ){
+	return keyState[keyCode];
 }
