@@ -25,7 +25,7 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	SetDrawScreen ( DX_SCREEN_BACK );
 
 	// メインループ
-	while ( UpdateKeyState() == 0 )
+	while ( UpdateKeyState() == 0 && UpdateMouseButtonState() == 0 )
 	{
 		// 画面を初期化
 		ClearDrawScreen ();
@@ -50,40 +50,33 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 void GameProcessing () {
 	player.Moving();
 
-	if ( fadeMode == Mode_FadeNone ) {
-		if ( CheckHitKey( KEY_INPUT_SPACE ) ) {
-			fadeMode = Mode_FadeIn;
-		}
-		else if ( CheckHitKey( KEY_INPUT_RETURN ) ) {
-			fadeMode = Mode_FadeOut;
-		}
-	}
-
-	if ( GetKeyStatus( KEY_INPUT_A ) == 0 ) {
+	if ( GetKeyStatus( KEY_INPUT_A ) == Input_NotPressed ) {
 		DrawString( 10, 100, "押されていない", COLOR_WHITE );
 	}
-	else if ( GetKeyStatus( KEY_INPUT_A ) == 1 ) {
+	else if ( GetKeyStatus( KEY_INPUT_A ) == Input_Pressed ) {
 		DrawString( 1000, 100, "押された", COLOR_GREEN );
 	}
-	else if ( GetKeyStatus( KEY_INPUT_A ) == -1 ) {
+	else if ( GetKeyStatus( KEY_INPUT_A ) == Input_Released ) {
 		DrawString( 1000, 100, "離された", COLOR_RED );
 	}
 	else {
 		DrawFormatString( 10, 100, COLOR_BLUE, "押されている : %d フレーム", GetKeyStatus(KEY_INPUT_A) );
 	}
+
+	if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == Input_NotPressed ) {
+		DrawString( 10, 300, "押されていない", COLOR_WHITE );
+	}
+	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == Input_Pressed ) {
+		DrawString( 1000, 300, "押された", COLOR_GREEN );
+	}
+	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == Input_Released ) {
+		DrawString( 1000, 300, "離された", COLOR_RED );
+	}
+	else {
+		DrawFormatString( 10, 300, COLOR_BLUE, "押されている : %d フレーム", GetMouseButtonStatus( MOUSE_INPUT_LEFT ) );
+	}
 }
 
 void DrawProcessing() {
 	player.Draw();
-
-	if ( fadeMode == Mode_FadeIn ) {
-		if ( FadeIn( 255 / 60, COLOR_BLUE, 30 ) ) {
-			fadeMode = Mode_FadeNone;
-		}
-	}
-	else if ( fadeMode == Mode_FadeOut ) {
-		if ( FadeOut( 255 / 60, COLOR_RED, 90 ) ) {
-			fadeMode = Mode_FadeNone;
-		}
-	}
 }

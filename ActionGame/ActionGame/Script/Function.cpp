@@ -2,6 +2,8 @@
 
 // キーが何フレーム入力されているか保存する
 int keyState[256];
+// マウスボタンが何フレーム入力されているか保存する
+int mouseState[MOUSEBUTTON_UPDATE_RANGE] = {};
 
 bool Fade(FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime ) {
 
@@ -82,4 +84,35 @@ int UpdateKeyState() {
 
 int GetKeyStatus( int keyCode ){
 	return keyState[keyCode];
+}
+
+int UpdateMouseButtonState() {
+	char currentMouseState[MOUSEBUTTON_UPDATE_RANGE];
+
+	for ( int i = 0; i < MOUSEBUTTON_UPDATE_RANGE; i++ ) {
+		currentMouseState[i] = (GetMouseInput() & i);
+	}
+
+	MOUSE_INPUT_LEFT;
+
+	for ( int i = 0; i < MOUSEBUTTON_UPDATE_RANGE; i++ ) {
+		if ( mouseState[i] == -1 ) {
+			mouseState[i] = 0;
+		}
+
+		if ( currentMouseState[i] != 0 ) {
+			mouseState[i]++;
+		}
+		else {
+			if ( mouseState[i] != 0 ) {
+				mouseState[i] = -1;
+			}
+		}
+	}
+
+	return 0;
+}
+
+int GetMouseButtonStatus( int mouseButtonCode ) {
+	return mouseState[mouseButtonCode];
 }

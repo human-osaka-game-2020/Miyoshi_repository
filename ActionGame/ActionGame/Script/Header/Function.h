@@ -7,11 +7,14 @@ enum FadeMode {
 	Mode_FadeOut
 };
 
-enum KeyState {
-	Key_NotPressed = 0,
-	Key_Pressed = 1,
-	Key_Released = -1
+enum InputState {
+	Input_NotPressed = 0,
+	Input_Pressed = 1,
+	Input_Released = -1
 };
+
+// マウスボタンの入力状態を調べる範囲
+const int MOUSEBUTTON_UPDATE_RANGE = 5;
 
 /// <summary>
 /// フェード処理の中身
@@ -54,5 +57,19 @@ int UpdateKeyState();
 /// <param name="keyCode">入力状態を取得したいキーのキーコード</param>
 /// <returns>-1:離された 0:押されていない 1:押された 2以上:押されているフレーム数</returns>
 int GetKeyStatus( int keyCode );
+
+/// <summary>
+/// マウスボタンの入力状態を更新する
+/// :毎フレーム呼び出す
+/// </summary>
+/// <returns>0以外はエラー</returns>
+int UpdateMouseButtonState();
+
+/// <summary>
+/// マウスボタンの入力状態を取得する
+/// </summary>
+/// <param name="mouseButtonCode">入力状態を取得したいマウスボタンのコード</param>
+/// <returns></returns>
+int GetMouseButtonStatus( int mouseButtonCode );
 
 #endif // !FUNCTION_H
