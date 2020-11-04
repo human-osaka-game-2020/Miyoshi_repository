@@ -65,17 +65,17 @@ int UpdateKeyState() {
 	}
 
 	for ( int i = 0; i < 256; i++ ) {
-		if ( keyState[i] != Input_Invalid ) {
-			if ( keyState[i] == Input_Released ) {
-				keyState[i] = Input_NotPressed;
+		if ( keyState[i] != InputState::Invalid ) {
+			if ( keyState[i] == InputState::Released ) {
+				keyState[i] = InputState::NotPressed;
 			}
 
-			if ( currentKeyState[i] == Input_Pressed ) {
+			if ( currentKeyState[i] == InputState::Pressed ) {
 				keyState[i]++;
 			}
 			else {
-				if ( keyState[i] != Input_NotPressed ) {
-					keyState[i] = Input_Released;
+				if ( keyState[i] != InputState::NotPressed ) {
+					keyState[i] = InputState::Released;
 				}
 			}
 		}
@@ -89,7 +89,7 @@ int GetKeyStatus( int keyCode ){
 }
 
 void KeyInputInvalidSwitching( int keyCode ) {
-	keyState[keyCode] = ( keyState[keyCode] == Input_Invalid ) ? Input_NotPressed : Input_Invalid;
+	keyState[keyCode] = ( keyState[keyCode] == InputState::Invalid ) ? InputState::NotPressed : InputState::Invalid;
 }
 
 int UpdateMouseButtonState() {
@@ -100,17 +100,17 @@ int UpdateMouseButtonState() {
 	}
 
 	for ( int i = 0; i < MOUSEBUTTON_UPDATE_RANGE; i++ ) {
-		if ( mouseState[i] != Input_Invalid ) {
-			if ( mouseState[i] == Input_Released ) {
-				mouseState[i] = Input_NotPressed;
+		if ( mouseState[i] != InputState::Invalid ) {
+			if ( mouseState[i] == InputState::Released ) {
+				mouseState[i] = InputState::NotPressed;
 			}
 
-			if ( currentMouseState[i] == Input_Pressed ) {
+			if ( currentMouseState[i] == InputState::Pressed ) {
 				mouseState[i]++;
 			}
 			else {
-				if ( mouseState[i] != Input_NotPressed ) {
-					mouseState[i] = Input_Released;
+				if ( mouseState[i] != InputState::NotPressed ) {
+					mouseState[i] = InputState::Released;
 				}
 			}
 		}
@@ -124,5 +124,5 @@ int GetMouseButtonStatus( int mouseButtonCode ) {
 }
 
 void MouseButtonInputInvalidSwitching( int mouseButtonCode ) {
-	mouseState[mouseButtonCode] = ( mouseState[mouseButtonCode] == Input_Invalid ) ? Input_NotPressed : Input_Invalid;
+	mouseState[mouseButtonCode] = ( mouseState[mouseButtonCode] == InputState::Invalid ) ? InputState::NotPressed : InputState::Invalid;
 }

@@ -7,11 +7,12 @@ enum FadeMode {
 	Mode_FadeOut
 };
 
+// キーボード、マウスの入力状態
 enum InputState {
-	Input_Invalid = -2,
-	Input_Released,
-	Input_NotPressed,
-	Input_Pressed
+	Invalid = -2,	// 無効
+	Released,		// 離した瞬間
+	NotPressed,		// 押されていない
+	Pressed			// 押された瞬間
 };
 
 // マウスボタンの入力状態を調べる範囲

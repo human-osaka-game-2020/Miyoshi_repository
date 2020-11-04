@@ -50,40 +50,40 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 void GameProcessing () {
 	player.Moving();
 
-	if ( GetKeyStatus( KEY_INPUT_RETURN ) == Input_Pressed ) {
+	if ( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed ) {
 		KeyInputInvalidSwitching( KEY_INPUT_A );
 	}
 
-	if ( GetKeyStatus( KEY_INPUT_SPACE ) == Input_Pressed ) {
+	if ( GetKeyStatus( KEY_INPUT_SPACE ) == InputState::Pressed ) {
 		MouseButtonInputInvalidSwitching( MOUSE_INPUT_LEFT );
 	}
 
-	if ( GetKeyStatus( KEY_INPUT_A ) == Input_Invalid ) {
+	if ( GetKeyStatus( KEY_INPUT_A ) == InputState::Invalid ) {
 		DrawString( 10, 100, "ì¸óÕÇÕñ≥å¯", COLOR_WHITE );
 	}
-	else if ( GetKeyStatus( KEY_INPUT_A ) == Input_NotPressed ) {
+	else if ( GetKeyStatus( KEY_INPUT_A ) == InputState::NotPressed ) {
 		DrawString( 10, 100, "âüÇ≥ÇÍÇƒÇ¢Ç»Ç¢", COLOR_WHITE );
 	}
-	else if ( GetKeyStatus( KEY_INPUT_A ) == Input_Pressed ) {
+	else if ( GetKeyStatus( KEY_INPUT_A ) == InputState::Pressed ) {
 		DrawString( 1000, 100, "âüÇ≥ÇÍÇΩ", COLOR_GREEN );
 	}
-	else if ( GetKeyStatus( KEY_INPUT_A ) == Input_Released ) {
+	else if ( GetKeyStatus( KEY_INPUT_A ) == InputState::Released ) {
 		DrawString( 1000, 100, "ó£Ç≥ÇÍÇΩ", COLOR_RED );
 	}
 	else {
 		DrawFormatString( 10, 100, COLOR_BLUE, "âüÇ≥ÇÍÇƒÇ¢ÇÈ : %d ÉtÉåÅ[ÉÄ", GetKeyStatus(KEY_INPUT_A) );
 	}
 
-	if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == Input_Invalid ) {
+	if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == InputState::Invalid ) {
 		DrawString( 10, 300, "ì¸óÕÇÕñ≥å¯", COLOR_WHITE );
 	}
-	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == Input_NotPressed ) {
+	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == InputState::NotPressed ) {
 		DrawString( 10, 300, "âüÇ≥ÇÍÇƒÇ¢Ç»Ç¢", COLOR_WHITE );
 	}
-	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == Input_Pressed ) {
+	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == InputState::Pressed ) {
 		DrawString( 1000, 300, "âüÇ≥ÇÍÇΩ", COLOR_GREEN );
 	}
-	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == Input_Released ) {
+	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == InputState::Released ) {
 		DrawString( 1000, 300, "ó£Ç≥ÇÍÇΩ", COLOR_RED );
 	}
 	else {
