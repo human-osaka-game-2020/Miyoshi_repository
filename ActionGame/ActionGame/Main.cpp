@@ -50,7 +50,15 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 void GameProcessing () {
 	player.Moving();
 
-	if ( GetKeyState( KEY_INPUT_A ) == Input_Invalid ) {
+	if ( GetKeyStatus( KEY_INPUT_RETURN ) == Input_Pressed ) {
+		KeyInputInvalidSwitching( KEY_INPUT_A );
+	}
+
+	if ( GetKeyStatus( KEY_INPUT_SPACE ) == Input_Pressed ) {
+		MouseButtonInputInvalidSwitching( MOUSE_INPUT_LEFT );
+	}
+
+	if ( GetKeyStatus( KEY_INPUT_A ) == Input_Invalid ) {
 		DrawString( 10, 100, "“ü—Í‚Í–³Œø", COLOR_WHITE );
 	}
 	else if ( GetKeyStatus( KEY_INPUT_A ) == Input_NotPressed ) {

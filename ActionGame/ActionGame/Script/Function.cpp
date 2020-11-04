@@ -88,12 +88,8 @@ int GetKeyStatus( int keyCode ){
 	return keyState[keyCode];
 }
 
-void KeyInputInvaliding( int keyCode ) {
-	keyState[keyCode] = Input_Invalid;
-}
-
-void KeyInputActivating( int keyCode ) {
-	keyState[keyCode] = Input_NotPressed;
+void KeyInputInvalidSwitching( int keyCode ) {
+	keyState[keyCode] = ( keyState[keyCode] == Input_Invalid ) ? Input_NotPressed : Input_Invalid;
 }
 
 int UpdateMouseButtonState() {
@@ -127,10 +123,6 @@ int GetMouseButtonStatus( int mouseButtonCode ) {
 	return mouseState[mouseButtonCode];
 }
 
-void MouseButtonInputInvaliding( int mouseButtonCode ) {
-	mouseState[mouseButtonCode] = Input_Invalid;
-}
-
-void MouseButtonInputActivating( int mouseButtonCode ) {
-	mouseState[mouseButtonCode] = Input_NotPressed;
+void MouseButtonInputInvalidSwitching( int mouseButtonCode ) {
+	mouseState[mouseButtonCode] = ( mouseState[mouseButtonCode] == Input_Invalid ) ? Input_NotPressed : Input_Invalid;
 }

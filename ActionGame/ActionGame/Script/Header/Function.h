@@ -60,16 +60,10 @@ int UpdateKeyState();
 int GetKeyStatus( int keyCode );
 
 /// <summary>
-/// キーの入力を無視する
+/// キー入力の無効/有効切り替え
 /// </summary>
-/// <param name="keyCode">入力を無視したいキーのキーコード</param>
-void KeyInputInvaliding( int keyCode );
-
-/// <summary>
-/// キーの入力を有効にする
-/// </summary>
-/// <param name="keyCode">入力を有効にしたいキーのキーコード</param>
-void KeyInputActivating( int keyCode );
+/// <param name="keyCode">入力の無効/有効を切り替えたいキーのキーコード</param>
+void KeyInputInvalidSwitching( int keyCode );
 
 /// <summary>
 /// マウスボタンの入力状態を更新する
@@ -86,15 +80,9 @@ int UpdateMouseButtonState();
 int GetMouseButtonStatus( int mouseButtonCode );
 
 /// <summary>
-/// マウスボタンの入力を無視する
+/// マウスボタン入力の無効/有効切り替え
 /// </summary>
-/// <param name="mouseButtonCode">入力を無視したいマウスボタンのコード</param>
-void MouseButtonInputInvaliding( int mouseButtonCode );
-
-/// <summary>
-/// マウスボタンの入力を有効にする
-/// </summary>
-/// <param name="mouseButtonCode">入力を有効にしたいマウスボタンのコード</param>
-void MouseButtonInputActivating( int mouseButtonCode );
+/// <param name="keyCode">入力の無効/有効を切り替えたいマウスボタンのコード</param>
+void MouseButtonInputInvalidSwitching( int mouseButtonCode );
 
 #endif // !FUNCTION_H
