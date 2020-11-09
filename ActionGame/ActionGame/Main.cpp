@@ -12,6 +12,7 @@ FadeMode fadeMode = Mode_FadeNone;
 // プログラムは WinMain から始まります
 int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 {
+	SetOutApplicationLogValidFlag(false);
 
 	SetGraphMode ( WINDOW_WIDTH, WINDOW_HEIGHT, 32, 60 );
 	ChangeWindowMode ( true ); // ウィンドウモードに変更
