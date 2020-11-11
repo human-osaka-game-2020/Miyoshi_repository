@@ -26,7 +26,7 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	SetDrawScreen ( DX_SCREEN_BACK );
 
 	// ƒƒCƒ“ƒ‹[ƒv
-	while ( UpdateKeyState() == 0 && UpdateMouseButtonState() == 0 )
+	while ( true )
 	{
 		// ‰æ–Ê‚ğ‰Šú‰»
 		ClearDrawScreen ();
@@ -50,6 +50,9 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 void GameProcessing () {
 	player.Moving();
+
+	if ( UpdateKeyState() != 0 ) return;
+	if ( UpdateMouseButtonState() != 0 ) return;
 
 	if ( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed ) {
 		KeyInputInvalidSwitching( KEY_INPUT_A );
