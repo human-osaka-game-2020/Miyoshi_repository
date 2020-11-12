@@ -1,8 +1,8 @@
-#include "Header/Common.h"
+ï»¿#include "Header/Common.h"
 
-// ƒL[‚ª‰½ƒtƒŒ[ƒ€“ü—Í‚³‚ê‚Ä‚¢‚é‚©•Û‘¶‚·‚é
+// ã‚­ãƒ¼ãŒä½•ãƒ•ãƒ¬ãƒ¼ãƒ å…¥åŠ›ã•ã‚Œã¦ã„ã‚‹ã‹ä¿å­˜ã™ã‚‹
 int keyState[256];
-// ƒ}ƒEƒXƒ{ƒ^ƒ“‚ª‰½ƒtƒŒ[ƒ€“ü—Í‚³‚ê‚Ä‚¢‚é‚©•Û‘¶‚·‚é
+// ãƒã‚¦ã‚¹ãƒœã‚¿ãƒ³ãŒä½•ãƒ•ãƒ¬ãƒ¼ãƒ å…¥åŠ›ã•ã‚Œã¦ã„ã‚‹ã‹ä¿å­˜ã™ã‚‹
 int mouseState[MOUSEBUTTON_UPDATE_RANGE] = {};
 
 bool Fade(FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime ) {
@@ -88,7 +88,7 @@ int GetKeyStatus( int keyCode ){
 	return keyState[keyCode];
 }
 
-void KeyInputInvalidSwitching( int keyCode ) {
+void ChangeKeyInputInvalidState( int keyCode ) {
 	keyState[keyCode] = ( keyState[keyCode] == InputState::Invalid ) ? InputState::NotPressed : InputState::Invalid;
 }
 
@@ -123,6 +123,6 @@ int GetMouseButtonStatus( int mouseButtonCode ) {
 	return mouseState[mouseButtonCode];
 }
 
-void MouseButtonInputInvalidSwitching( int mouseButtonCode ) {
+void ChangeMouseInputInvalidState( int mouseButtonCode ) {
 	mouseState[mouseButtonCode] = ( mouseState[mouseButtonCode] == InputState::Invalid ) ? InputState::NotPressed : InputState::Invalid;
 }

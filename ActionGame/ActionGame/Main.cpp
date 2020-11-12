@@ -1,51 +1,51 @@
-#include "Script/Header/Common.h"
+ï»¿#include "Script/Header/Common.h"
 
-// ƒQ[ƒ€ˆ—
+// ã‚²ãƒ¼ãƒ å‡¦ç†
 void GameProcessing ();
-// •`‰æˆ—
+// æç”»å‡¦ç†
 void DrawProcessing ();
 
 Player player;
 
 FadeMode fadeMode = Mode_FadeNone;
 
-// ƒvƒƒOƒ‰ƒ€‚Í WinMain ‚©‚çn‚Ü‚è‚Ü‚·
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã¯ WinMain ã‹ã‚‰å§‹ã¾ã‚Šã¾ã™
 int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 {
 	SetOutApplicationLogValidFlag(false);
 
 	SetGraphMode ( WINDOW_WIDTH, WINDOW_HEIGHT, 32, 60 );
-	ChangeWindowMode ( true ); // ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚É•ÏX
+	ChangeWindowMode ( true ); // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰ã«å¤‰æ›´
 
-	if ( DxLib_Init () == -1 )	// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»ˆ—
+	if ( DxLib_Init () == -1 )	// ï¼¤ï¼¸ãƒ©ã‚¤ãƒ–ãƒ©ãƒªåˆæœŸåŒ–å‡¦ç†
 	{
-		return -1; // ƒGƒ‰[‚ª‹N‚«‚½‚ç’¼‚¿‚ÉI—¹
+		return -1; // ã‚¨ãƒ©ãƒ¼ãŒèµ·ããŸã‚‰ç›´ã¡ã«çµ‚äº†
 	}
 
-	// ƒOƒ‰ƒtƒBƒbƒN‚Ì•`‰ææ‚ğ— ‰æ–Ê‚ÉƒZƒbƒg
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã®æç”»å…ˆã‚’è£ç”»é¢ã«ã‚»ãƒƒãƒˆ
 	SetDrawScreen ( DX_SCREEN_BACK );
 
-	// ƒƒCƒ“ƒ‹[ƒv
+	// ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
 	while ( true )
 	{
-		// ‰æ–Ê‚ğ‰Šú‰»
+		// ç”»é¢ã‚’åˆæœŸåŒ–
 		ClearDrawScreen ();
 
 		GameProcessing ();
 		DrawProcessing ();
 
-		// -1 ‚ª•Ô‚Á‚Ä‚«‚½‚çƒ‹[ƒv‚ğ”²‚¯‚é
+		// -1 ãŒè¿”ã£ã¦ããŸã‚‰ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 		if ( ProcessMessage () < 0 ) break;
-		// ‚à‚µ‚d‚r‚bƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚çƒ‹[ƒv‚©‚ç”²‚¯‚é
+		// ã‚‚ã—ï¼¥ï¼³ï¼£ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ãŸã‚‰ãƒ«ãƒ¼ãƒ—ã‹ã‚‰æŠœã‘ã‚‹
 		if ( CheckHitKey ( KEY_INPUT_ESCAPE ) ) break;
 
-		// — ‰æ–Ê‚Ì“à—e‚ğ•\‰æ–Ê‚ÉƒRƒs[‚·‚é
+		// è£ç”»é¢ã®å†…å®¹ã‚’è¡¨ç”»é¢ã«ã‚³ãƒ”ãƒ¼ã™ã‚‹
 		ScreenFlip ();
 	}
 
-	DxLib_End ();				// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠg—p‚ÌI—¹ˆ—
+	DxLib_End ();				// ï¼¤ï¼¸ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä½¿ç”¨ã®çµ‚äº†å‡¦ç†
 
-	return 0;					// ƒ\ƒtƒg‚ÌI—¹
+	return 0;					// ã‚½ãƒ•ãƒˆã®çµ‚äº†
 }
 
 void GameProcessing () {
@@ -55,43 +55,43 @@ void GameProcessing () {
 	if ( UpdateMouseButtonState() != 0 ) return;
 
 	if ( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed ) {
-		KeyInputInvalidSwitching( KEY_INPUT_A );
+		ChangeKeyInputInvalidState( KEY_INPUT_A );
 	}
 
 	if ( GetKeyStatus( KEY_INPUT_SPACE ) == InputState::Pressed ) {
-		MouseButtonInputInvalidSwitching( MOUSE_INPUT_LEFT );
+		ChangeMouseInputInvalidState( MOUSE_INPUT_LEFT );
 	}
 
 	if ( GetKeyStatus( KEY_INPUT_A ) == InputState::Invalid ) {
-		DrawString( 10, 100, "“ü—Í‚Í–³Œø", COLOR_WHITE );
+		DrawString( 10, 100, "å…¥åŠ›ã¯ç„¡åŠ¹", COLOR_WHITE );
 	}
 	else if ( GetKeyStatus( KEY_INPUT_A ) == InputState::NotPressed ) {
-		DrawString( 10, 100, "‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢", COLOR_WHITE );
+		DrawString( 10, 100, "æŠ¼ã•ã‚Œã¦ã„ãªã„", COLOR_WHITE );
 	}
 	else if ( GetKeyStatus( KEY_INPUT_A ) == InputState::Pressed ) {
-		DrawString( 1000, 100, "‰Ÿ‚³‚ê‚½", COLOR_GREEN );
+		DrawString( 1000, 100, "æŠ¼ã•ã‚ŒãŸ", COLOR_GREEN );
 	}
 	else if ( GetKeyStatus( KEY_INPUT_A ) == InputState::Released ) {
-		DrawString( 1000, 100, "—£‚³‚ê‚½", COLOR_RED );
+		DrawString( 1000, 100, "é›¢ã•ã‚ŒãŸ", COLOR_RED );
 	}
 	else {
-		DrawFormatString( 10, 100, COLOR_BLUE, "‰Ÿ‚³‚ê‚Ä‚¢‚é : %d ƒtƒŒ[ƒ€", GetKeyStatus(KEY_INPUT_A) );
+		DrawFormatString( 10, 100, COLOR_BLUE, "æŠ¼ã•ã‚Œã¦ã„ã‚‹ : %d ãƒ•ãƒ¬ãƒ¼ãƒ ", GetKeyStatus(KEY_INPUT_A) );
 	}
 
 	if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == InputState::Invalid ) {
-		DrawString( 10, 300, "“ü—Í‚Í–³Œø", COLOR_WHITE );
+		DrawString( 10, 300, "å…¥åŠ›ã¯ç„¡åŠ¹", COLOR_WHITE );
 	}
 	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == InputState::NotPressed ) {
-		DrawString( 10, 300, "‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢", COLOR_WHITE );
+		DrawString( 10, 300, "æŠ¼ã•ã‚Œã¦ã„ãªã„", COLOR_WHITE );
 	}
 	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == InputState::Pressed ) {
-		DrawString( 1000, 300, "‰Ÿ‚³‚ê‚½", COLOR_GREEN );
+		DrawString( 1000, 300, "æŠ¼ã•ã‚ŒãŸ", COLOR_GREEN );
 	}
 	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == InputState::Released ) {
-		DrawString( 1000, 300, "—£‚³‚ê‚½", COLOR_RED );
+		DrawString( 1000, 300, "é›¢ã•ã‚ŒãŸ", COLOR_RED );
 	}
 	else {
-		DrawFormatString( 10, 300, COLOR_BLUE, "‰Ÿ‚³‚ê‚Ä‚¢‚é : %d ƒtƒŒ[ƒ€", GetMouseButtonStatus( MOUSE_INPUT_LEFT ) );
+		DrawFormatString( 10, 300, COLOR_BLUE, "æŠ¼ã•ã‚Œã¦ã„ã‚‹ : %d ãƒ•ãƒ¬ãƒ¼ãƒ ", GetMouseButtonStatus( MOUSE_INPUT_LEFT ) );
 	}
 }
 

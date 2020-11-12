@@ -1,4 +1,4 @@
-#ifndef FUNCTION_H
+﻿#ifndef FUNCTION_H
 #define FUNCTION_H
 
 enum FadeMode {
@@ -7,83 +7,83 @@ enum FadeMode {
 	Mode_FadeOut
 };
 
-// �L�[�{�[�h�A�}�E�X�̓��͏��
+// キーボード、マウスの入力状態
 enum InputState {
-	Invalid = -2,	// ����
-	Released,		// �������u��
-	NotPressed,		// ������Ă��Ȃ�
-	Pressed			// �����ꂽ�u��
+	Invalid = -2,	// 無効
+	Released,		// 離した瞬間
+	NotPressed,		// 押されていない
+	Pressed			// 押された瞬間
 };
 
-// �}�E�X�{�^���̓��͏�Ԃ𒲂ׂ�͈�
+// マウスボタンの入力状態を調べる範囲
 const int MOUSEBUTTON_UPDATE_RANGE = 5;
 
 /// <summary>
-/// �t�F�[�h�����̒��g
+/// フェード処理の中身
 /// </summary>
-/// <param name="fademode">�t�F�[�h�̎��</param>
-/// <param name="fadePower">�t�F�[�h�̑���</param>
-/// <param name="fadeColor">�t�F�[�h����F</param>
-/// <param name="waitTime">�t�F�[�h�̑҂�����(�t���[��)</param>
-/// <returns>true == �����I��, false == ������</returns>
+/// <param name="fademode">フェードの種類</param>
+/// <param name="fadePower">フェードの速さ</param>
+/// <param name="fadeColor">フェードする色</param>
+/// <param name="waitTime">フェードの待ち時間(フレーム)</param>
+/// <returns>true == 処理終了, false == 処理中</returns>
 bool Fade( FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTime );
 
 /// <summary>
-/// �t�F�[�h�C��
+/// フェードイン
 /// </summary>
-/// <param name="fadePower">�t�F�[�h�̑���</param>
-/// <param name="fadeColor">�t�F�[�h�C������O�̐F</param>
-/// <param name="waitTime">�t�F�[�h���n�܂�O�ɑ҂���(�t���[��)</param>
-/// <returns>true == �����I��, false == ������</returns>
+/// <param name="fadePower">フェードの速さ</param>
+/// <param name="fadeColor">フェードインする前の色</param>
+/// <param name="waitTime">フェードが始まる前に待つ時間(フレーム)</param>
+/// <returns>true == 処理終了, false == 処理中</returns>
 bool FadeIn( unsigned int fadePower, int fadeColor = GetColor( 0, 0, 0 ), int waitTime = 0 );
 
 /// <summary>
-/// �t�F�[�h�A�E�g
+/// フェードアウト
 /// </summary>
-/// <param name="fadePower">�t�F�[�h�̑���</param>
-/// <param name="fadeColor">�t�F�[�h�A�E�g������̐F</param>
-/// <param name="waitTime">�t�F�[�h���I�������ɑ҂���(�t���[��)</param>
-/// <returns>true == �����I��, false == ������</returns>
+/// <param name="fadePower">フェードの速さ</param>
+/// <param name="fadeColor">フェードアウトした後の色</param>
+/// <param name="waitTime">フェードが終わった後に待つ時間(フレーム)</param>
+/// <returns>true == 処理終了, false == 処理中</returns>
 bool FadeOut( unsigned int fadePower, int fadeColor = GetColor( 0, 0, 0 ), int waitTime = 0 );
 
 /// <summary>
-/// �L�[�̓��͏�Ԃ��X�V����
-/// :���t���[���Ăяo��
+/// キーの入力状態を更新する
+/// :毎フレーム呼び出す
 /// </summary>
-/// <returns>0�ȊO�̓G���[</returns>
+/// <returns>0以外はエラー</returns>
 int UpdateKeyState();
 
 /// <summary>
-/// �L�[�̓��͏�Ԃ��擾����
+/// キーの入力状態を取得する
 /// </summary>
-/// <param name="keyCode">���͏�Ԃ��擾�������L�[�̃L�[�R�[�h</param>
-/// <returns>-1:�����ꂽ 0:������Ă��Ȃ� 1:�����ꂽ 2�ȏ�:������Ă���t���[����</returns>
+/// <param name="keyCode">入力状態を取得したいキーのキーコード</param>
+/// <returns>-1:離された 0:押されていない 1:押された 2以上:押されているフレーム数</returns>
 int GetKeyStatus( int keyCode );
 
 /// <summary>
-/// �L�[���̖͂���/�L���؂�ւ�
+/// キー入力の無効/有効切り替え
 /// </summary>
-/// <param name="keyCode">���̖͂���/�L����؂�ւ������L�[�̃L�[�R�[�h</param>
-void KeyInputInvalidSwitching( int keyCode );
+/// <param name="keyCode">入力の無効/有効を切り替えたいキーのキーコード</param>
+void ChangeKeyInputInvalidState( int keyCode );
 
 /// <summary>
-/// �}�E�X�{�^���̓��͏�Ԃ��X�V����
-/// :���t���[���Ăяo��
+/// マウスボタンの入力状態を更新する
+/// :毎フレーム呼び出す
 /// </summary>
-/// <returns>0�ȊO�̓G���[</returns>
+/// <returns>0以外はエラー</returns>
 int UpdateMouseButtonState();
 
 /// <summary>
-/// �}�E�X�{�^���̓��͏�Ԃ��擾����
+/// マウスボタンの入力状態を取得する
 /// </summary>
-/// <param name="mouseButtonCode">���͏�Ԃ��擾�������}�E�X�{�^���̃R�[�h</param>
+/// <param name="mouseButtonCode">入力状態を取得したいマウスボタンのコード</param>
 /// <returns></returns>
 int GetMouseButtonStatus( int mouseButtonCode );
 
 /// <summary>
-/// �}�E�X�{�^�����̖͂���/�L���؂�ւ�
+/// マウスボタン入力の無効/有効切り替え
 /// </summary>
-/// <param name="keyCode">���̖͂���/�L����؂�ւ������}�E�X�{�^���̃R�[�h</param>
-void MouseButtonInputInvalidSwitching( int mouseButtonCode );
+/// <param name="keyCode">入力の無効/有効を切り替えたいマウスボタンのコード</param>
+void ChangeMouseInputInvalidState( int mouseButtonCode );
 
 #endif // !FUNCTION_H
