@@ -2,6 +2,7 @@
 
 // キーが何フレーム入力されているか保存する
 int keyState[256];
+
 // マウスボタンが何フレーム入力されているか保存する
 int mouseState[MOUSEBUTTON_UPDATE_RANGE] = {};
 
@@ -65,31 +66,47 @@ int UpdateKeyState() {
 	}
 
 	for ( int i = 0; i < 256; i++ ) {
-		if ( keyState[i] != InputState::Invalid ) {
-			if ( keyState[i] == InputState::Released ) {
-				keyState[i] = InputState::NotPressed;
+		if ( keyState[i] != -2 ){
+			if ( keyState[i] == -1 ){
+				keyState[i] = 0;
 			}
 
-			if ( currentKeyState[i] == InputState::Pressed ) {
+			if ( currentKeyState[i] == 1 ) {
 				keyState[i]++;
 			}
 			else {
-				if ( keyState[i] != InputState::NotPressed ) {
-					keyState[i] = InputState::Released;
+				if ( keyState[i] != 0 ){
+					keyState[i] = -1;
 				}
 			}
 		}
 	}
-
 	return 0;
 }
 
-int GetKeyStatus( int keyCode ){
-	return keyState[keyCode];
+InputState GetKeyStatus( int keyCode ){
+	switch ( keyState[keyCode] )
+	{
+	case -2:
+		return InputState::Invalid;
+		break;
+	case -1:
+		return InputState::Released;
+		break;
+	case 0:
+		return InputState::NotPressed;
+		break;
+	case 1:
+		return InputState::Pressed;
+		break;
+	default:
+		return InputState::Pressing;
+		break;
+	}
 }
 
 void ChangeKeyInputInvalidState( int keyCode ) {
-	keyState[keyCode] = ( keyState[keyCode] == InputState::Invalid ) ? InputState::NotPressed : InputState::Invalid;
+	keyState[keyCode] = ( keyState[keyCode] == -2 ) ? 0 : -2;
 }
 
 int UpdateMouseButtonState() {
@@ -100,17 +117,17 @@ int UpdateMouseButtonState() {
 	}
 
 	for ( int i = 0; i < MOUSEBUTTON_UPDATE_RANGE; i++ ) {
-		if ( mouseState[i] != InputState::Invalid ) {
-			if ( mouseState[i] == InputState::Released ) {
-				mouseState[i] = InputState::NotPressed;
+		if ( mouseState[i] != -2 ) {
+			if ( mouseState[i] == -1 ) {
+				mouseState[i] = 0;
 			}
 
-			if ( currentMouseState[i] == InputState::Pressed ) {
+			if ( currentMouseState[i] == 1 ) {
 				mouseState[i]++;
 			}
 			else {
-				if ( mouseState[i] != InputState::NotPressed ) {
-					mouseState[i] = InputState::Released;
+				if ( mouseState[i] != 0 ) {
+					mouseState[i] = -1;
 				}
 			}
 		}
@@ -119,10 +136,27 @@ int UpdateMouseButtonState() {
 	return 0;
 }
 
-int GetMouseButtonStatus( int mouseButtonCode ) {
-	return mouseState[mouseButtonCode];
+InputState GetMouseButtonStatus( int mouseButtonCode ) {
+	switch ( mouseState[mouseButtonCode] )
+	{
+	case -2:
+		return InputState::Invalid;
+		break;
+	case -1:
+		return InputState::Released;
+		break;
+	case 0:
+		return InputState::NotPressed;
+		break;
+	case 1:
+		return InputState::Pressed;
+		break;
+	default:
+		return InputState::Pressing;
+		break;
+	}
 }
 
 void ChangeMouseInputInvalidState( int mouseButtonCode ) {
-	mouseState[mouseButtonCode] = ( mouseState[mouseButtonCode] == InputState::Invalid ) ? InputState::NotPressed : InputState::Invalid;
+	mouseState[mouseButtonCode] = ( mouseState[mouseButtonCode] == -2 ) ? 0 : -2;
 }

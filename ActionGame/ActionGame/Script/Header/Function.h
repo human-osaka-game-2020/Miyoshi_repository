@@ -9,10 +9,11 @@ enum FadeMode {
 
 // キーボード、マウスの入力状態
 enum InputState {
-	Invalid = -2,	// 無効
-	Released,		// 離した瞬間
+	Invalid,		// 無効
 	NotPressed,		// 押されていない
-	Pressed			// 押された瞬間
+	Pressed,		// 押された瞬間
+	Pressing,		// 押している
+	Released		// 離した瞬間
 };
 
 // マウスボタンの入力状態を調べる範囲
@@ -57,8 +58,8 @@ int UpdateKeyState();
 /// キーの入力状態を取得する
 /// </summary>
 /// <param name="keyCode">入力状態を取得したいキーのキーコード</param>
-/// <returns>-1:離された 0:押されていない 1:押された 2以上:押されているフレーム数</returns>
-int GetKeyStatus( int keyCode );
+/// <returns>InputStateで返す</returns>
+InputState GetKeyStatus( int keyCode );
 
 /// <summary>
 /// キー入力の無効/有効切り替え
@@ -77,8 +78,8 @@ int UpdateMouseButtonState();
 /// マウスボタンの入力状態を取得する
 /// </summary>
 /// <param name="mouseButtonCode">入力状態を取得したいマウスボタンのコード</param>
-/// <returns></returns>
-int GetMouseButtonStatus( int mouseButtonCode );
+/// <returns>InputStateで返す</returns>
+InputState GetMouseButtonStatus( int mouseButtonCode );
 
 /// <summary>
 /// マウスボタン入力の無効/有効切り替え

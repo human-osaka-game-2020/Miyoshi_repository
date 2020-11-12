@@ -62,36 +62,46 @@ void GameProcessing () {
 		ChangeMouseInputInvalidState( MOUSE_INPUT_LEFT );
 	}
 
-	if ( GetKeyStatus( KEY_INPUT_A ) == InputState::Invalid ) {
+	switch ( GetKeyStatus(KEY_INPUT_A) )
+	{
+	case InputState::Invalid:
 		DrawString( 10, 100, "入力は無効", COLOR_WHITE );
-	}
-	else if ( GetKeyStatus( KEY_INPUT_A ) == InputState::NotPressed ) {
+		break;
+	case InputState::NotPressed:
 		DrawString( 10, 100, "押されていない", COLOR_WHITE );
-	}
-	else if ( GetKeyStatus( KEY_INPUT_A ) == InputState::Pressed ) {
+		break;
+	case InputState::Pressed:
 		DrawString( 1000, 100, "押された", COLOR_GREEN );
-	}
-	else if ( GetKeyStatus( KEY_INPUT_A ) == InputState::Released ) {
+		break;
+	case InputState::Pressing:
+		DrawString( 10, 100, "押している", COLOR_BLUE );
+		break;
+	case InputState::Released:
 		DrawString( 1000, 100, "離された", COLOR_RED );
-	}
-	else {
-		DrawFormatString( 10, 100, COLOR_BLUE, "押されている : %d フレーム", GetKeyStatus(KEY_INPUT_A) );
+		break;
+	default:
+		break;
 	}
 
-	if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == InputState::Invalid ) {
+	switch ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) )
+	{
+	case InputState::Invalid:
 		DrawString( 10, 300, "入力は無効", COLOR_WHITE );
-	}
-	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == InputState::NotPressed ) {
+		break;
+	case InputState::NotPressed:
 		DrawString( 10, 300, "押されていない", COLOR_WHITE );
-	}
-	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == InputState::Pressed ) {
+		break;
+	case InputState::Pressed:
 		DrawString( 1000, 300, "押された", COLOR_GREEN );
-	}
-	else if ( GetMouseButtonStatus( MOUSE_INPUT_LEFT ) == InputState::Released ) {
+		break;
+	case InputState::Pressing:
+		DrawString( 10, 300, "押している", COLOR_BLUE );
+		break;
+	case InputState::Released:
 		DrawString( 1000, 300, "離された", COLOR_RED );
-	}
-	else {
-		DrawFormatString( 10, 300, COLOR_BLUE, "押されている : %d フレーム", GetMouseButtonStatus( MOUSE_INPUT_LEFT ) );
+		break;
+	default:
+		break;
 	}
 }
 
