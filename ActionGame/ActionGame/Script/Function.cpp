@@ -105,7 +105,7 @@ InputState GetKeyStatus( int keyCode ){
 	}
 }
 
-void ChangeKeyInputInvalidState( int keyCode ) {
+void KeyInputEnabledToggle( int keyCode ) {
 	keyState[keyCode] = ( keyState[keyCode] == -2 ) ? 0 : -2;
 }
 
@@ -157,6 +157,6 @@ InputState GetMouseButtonStatus( int mouseButtonCode ) {
 	}
 }
 
-void ChangeMouseInputInvalidState( int mouseButtonCode ) {
+void MouseButtonInputEnabledToggle( int mouseButtonCode ) {
 	mouseState[mouseButtonCode] = ( mouseState[mouseButtonCode] == -2 ) ? 0 : -2;
 }
