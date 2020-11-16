@@ -9,7 +9,7 @@ enum FadeMode {
 
 // キーボード、マウスの入力状態
 enum InputState {
-	Invalid,		// 無効
+	Invalid = -1,	// 無効
 	NotPressed,		// 押されていない
 	Pressed,		// 押された瞬間
 	Pressing,		// 押している
