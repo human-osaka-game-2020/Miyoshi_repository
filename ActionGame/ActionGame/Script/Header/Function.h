@@ -47,6 +47,10 @@ bool FadeIn( unsigned int fadePower, int fadeColor = GetColor( 0, 0, 0 ), int wa
 /// <returns>true == 処理終了, false == 処理中</returns>
 bool FadeOut( unsigned int fadePower, int fadeColor = GetColor( 0, 0, 0 ), int waitTime = 0 );
 
+/// @brief すべてのキーで現在押されているかを調べる
+/// @param stateArray 情報保存用のbool配列
+void CheckKeyPushed( bool* pStateArray );
+
 /// <summary>
 /// キーの入力状態を更新する
 /// :毎フレーム呼び出す

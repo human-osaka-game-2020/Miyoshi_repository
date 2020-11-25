@@ -58,14 +58,24 @@ bool FadeOut(unsigned int fadePower, int fadeColor, int waitTime ) {
 	return Fade ( Mode_FadeOut, fadePower, fadeColor, waitTime ) ? true : false;
 }
 
+void CheckKeyPushed( bool* pStateArray ){
+	char temp[256];
+
+	GetHitKeyStateAll( temp );
+
+	for( int i = 0; i < 256; i++ ){
+		pStateArray[i] = ( temp[i] == 1 ) ? true : false;
+	}
+}
+
 /// @brief キー/マウスの入力状態を更新する
-/// @param isPressed 1 = 押している, 1以外 = 押していない
+/// @param isPressed 現在キーが押されているか
 /// @param inputState キー/マウスの入力状態
 /// @return 入力状態の判定結果 InputStateで返す
-InputState UpdateInputState( int isPressed, InputState inputState ){
+InputState UpdateInputState( bool isPressed, InputState inputState ){
 	if ( inputState == InputState::Invalid )return InputState::Invalid;
 
-	if ( isPressed == 1 ){
+	if ( isPressed == true ){
 		if ( inputState == InputState::NotPressed ){
 			return InputState::Pressed;
 		}
@@ -83,11 +93,9 @@ InputState UpdateInputState( int isPressed, InputState inputState ){
 }
 
 int UpdateKeyState() {
-	char currentKeyState[256];
+	bool currentKeyState[256];
 
-	if ( GetHitKeyStateAll( currentKeyState ) != 0 ) {
-		return -1;
-	}
+	CheckKeyPushed( currentKeyState );
 
 	for ( int i = 0; i < 256; i++ ) {
 		keyState[i] = UpdateInputState( currentKeyState[i], keyState[i] );
@@ -105,10 +113,10 @@ void SwitchKeyInputEnable( int keyCode ) {
 }
 
 int UpdateMouseButtonState() {
-	char currentMouseState[MOUSEBUTTON_UPDATE_RANGE];
+	bool currentMouseState[MOUSEBUTTON_UPDATE_RANGE];
 
 	for ( int i = 0; i < MOUSEBUTTON_UPDATE_RANGE; i++ ) {
-		currentMouseState[i] = (GetMouseInput() & i);
+		currentMouseState[i] = ( ( GetMouseInput() & i ) != 0 ) ? true : false;
 	}
 
 	for ( int i = 0; i < MOUSEBUTTON_UPDATE_RANGE; i++ ) {
