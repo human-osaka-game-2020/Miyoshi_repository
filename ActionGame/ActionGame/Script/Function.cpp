@@ -117,9 +117,6 @@ int UpdateMouseButtonState() {
 
 	for ( int i = 0; i < MOUSEBUTTON_UPDATE_RANGE; i++ ) {
 		currentMouseState[i] = ( ( GetMouseInput() & i ) != 0 ) ? true : false;
-	}
-
-	for ( int i = 0; i < MOUSEBUTTON_UPDATE_RANGE; i++ ) {
 		mouseState[i] = UpdateInputState( currentMouseState[i], mouseState[i] );
 	}
 
