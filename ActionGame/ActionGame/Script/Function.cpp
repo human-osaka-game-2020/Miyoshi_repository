@@ -100,7 +100,7 @@ InputState GetKeyStatus( int keyCode ){
 	return keyState[keyCode];
 }
 
-void KeyInputEnabledToggle( int keyCode ) {
+void SwitchKeyInputEnable( int keyCode ) {
 	keyState[keyCode] = ( keyState[keyCode] == InputState::Invalid ) ? InputState::NotPressed : InputState::Invalid;
 }
 
@@ -122,6 +122,6 @@ InputState GetMouseButtonStatus( int mouseButtonCode ) {
 	return mouseState[mouseButtonCode];
 }
 
-void MouseButtonInputEnabledToggle( int mouseButtonCode ) {
+void SwitchMouseButtonInputEnable( int mouseButtonCode ) {
 	mouseState[mouseButtonCode] = ( mouseState[mouseButtonCode] == InputState::Invalid ) ? InputState::NotPressed : InputState::Invalid;
 }

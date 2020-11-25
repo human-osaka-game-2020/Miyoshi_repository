@@ -55,11 +55,11 @@ void GameProcessing () {
 	if ( UpdateMouseButtonState() != 0 ) return;
 
 	if ( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed ) {
-		KeyInputEnabledToggle( KEY_INPUT_A );
+		SwitchKeyInputEnable( KEY_INPUT_A );
 	}
 
 	if ( GetKeyStatus( KEY_INPUT_SPACE ) == InputState::Pressed ) {
-		MouseButtonInputEnabledToggle( MOUSE_INPUT_LEFT );
+		SwitchMouseButtonInputEnable( MOUSE_INPUT_LEFT );
 	}
 
 	switch ( GetKeyStatus(KEY_INPUT_A) )

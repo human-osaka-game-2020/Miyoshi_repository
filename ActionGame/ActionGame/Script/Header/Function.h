@@ -65,7 +65,7 @@ InputState GetKeyStatus( int keyCode );
 /// キー入力の無効/有効切り替え
 /// </summary>
 /// <param name="keyCode">入力の無効/有効を切り替えたいキーのキーコード</param>
-void KeyInputEnabledToggle( int keyCode );
+void SwitchKeyInputEnable( int keyCode );
 
 /// <summary>
 /// マウスボタンの入力状態を更新する
@@ -85,6 +85,6 @@ InputState GetMouseButtonStatus( int mouseButtonCode );
 /// マウスボタン入力の無効/有効切り替え
 /// </summary>
 /// <param name="keyCode">入力の無効/有効を切り替えたいマウスボタンのコード</param>
-void MouseButtonInputEnabledToggle( int mouseButtonCode );
+void SwitchMouseButtonInputEnable( int mouseButtonCode );
 
 #endif // !FUNCTION_H
