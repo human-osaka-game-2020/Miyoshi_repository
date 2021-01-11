@@ -25,8 +25,8 @@ void TitleScene::Control() {
 
 void TitleScene::Draw() {
 
-	DrawString( 10, 10, "Title", COLOR_RED );
-	DrawString( 10, 30, "Press 1 to OnPlay Scene", COLOR_RED );
+	DrawString( 10, 10, "Title", Color::red );
+	DrawString( 10, 30, "Press 1 to OnPlay Scene", Color::red );
 
-	SceneFade( SceneList::OnPlay, 255 / 60, COLOR_WHITE, 60 );
+	SceneFade( SceneList::OnPlay, 255 / 60, Color::white, 60 );
 }

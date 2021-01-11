@@ -5,6 +5,7 @@
 #include "../Common.h"
 #include "../Function/Function.h"
 #include "SceneBase.h"
+#include "../Function/Gauge.h"
 
 // ゲーム中のシーン
 class GameScene : public SceneBase {
@@ -26,6 +27,10 @@ private:
 	// 描画処理
 	// Execute内で呼び出し
 	void Draw();
+
+private:
+	static std::vector<Gauge> gaugeList;
+
 };
 
 #endif

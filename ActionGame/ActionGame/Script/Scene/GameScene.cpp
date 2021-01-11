@@ -3,6 +3,8 @@
 #include "../Manager/GameManager.h"
 #include "../Character/Player.h"
 
+std::vector<Gauge> GameScene::gaugeList;
+
 GameScene::GameScene() {
 
 }
@@ -21,17 +23,25 @@ void GameScene::Control() {
 
 	GameManager::GetInstance()->GetPlayerData()->Move();
 
+	for( int i = 0; i < gaugeList.size(); i++ ){
+		gaugeList.back().Control();
+	}
+
 	if ( CheckHitKey( KEY_INPUT_2 ) ) {
 		fadeMode = FadeMode::Out;
 	}
-
 }
 
 void GameScene::Draw() {
-	DrawString( 10, 10, "OnPlay", COLOR_RED );
-	DrawString( 10, 30, "Press 2 to Result Scene", COLOR_RED );
+	DrawString( 10, 10, "OnPlay", Color::red );
+	DrawString( 10, 30, "Press 2 to Result Scene", Color::red );
 
 	GameManager::GetInstance()->GetPlayerData()->Draw();
 
-	SceneFade( SceneList::Result, 255 / 120, 255 / 60, COLOR_WHITE, COLOR_BLUE, 30 );
+
+	for( int i = 0; i < gaugeList.size(); i++ ){
+		gaugeList.back().Draw();
+	}
+
+	SceneFade( SceneList::Result, 255 / 120, 255 / 60, Color::white, Color::blue, 30 );
 }
