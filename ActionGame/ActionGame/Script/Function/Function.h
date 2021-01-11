@@ -2,20 +2,22 @@
 #ifndef FUNCTION_H
 #define FUNCTION_H
 
+#include "../Common.h"
+
 // フェードの状態
-enum FadeMode {
+enum class FadeMode {
 	None,	// フェードなし
 	In,	// フェードイン中
 	Out	// フェードアウト中
 };
 
 // キーボード、マウスの入力状態
-enum InputState {
-	Invalid = -1,	// 無効
+enum class InputState {
 	NotPressed,		// 押されていない
 	Pressed,		// 押された瞬間
 	Pressing,		// 押している
-	Released		// 離した瞬間
+	Released,		// 離した瞬間
+	Invalid			// 無効
 };
 
 // マウスボタンの入力状態を調べる範囲

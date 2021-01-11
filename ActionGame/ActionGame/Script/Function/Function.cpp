@@ -1,5 +1,5 @@
 ﻿
-#include "Header/Common.h"
+#include "Function.h"
 
 // キーが何フレーム入力されているか保存する
 InputState keyState[256];
@@ -12,7 +12,7 @@ bool Fade( FadeMode fademode, unsigned int fadePower, int fadeColor, int waitTim
 	const int ALPHA_MAX = 255;
 	const int ALPHA_MIN = 0;
 	const int ALPHA_INVALID = -1;
-	
+
 	static int alpha = ALPHA_INVALID;
 	static int waitTimeCount = 0;
 

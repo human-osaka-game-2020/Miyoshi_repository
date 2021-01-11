@@ -1,15 +1,19 @@
 ﻿
-#ifndef SC_RESULT_H
-#define SC_RESULT_H
+#ifndef SC_TITLE_H
+#define SC_TITLE_H
 
-// リザルトシーン
-class ResultScene : public SceneBase {
+#include "../Common.h"
+#include "../Function/Function.h"
+#include "SceneBase.h"
+
+// タイトルシーン
+class TitleScene : public SceneBase {
 public:
 	// コンストラクタ
-	ResultScene();
+	TitleScene();
 
 	// デストラクタ
-	~ResultScene();
+	~TitleScene();
 
 	// メインループで呼び出すもの
 	void Execute();

@@ -1,5 +1,5 @@
 ﻿
-#include "Header/Common.h"
+#include "ResultScene.h"
 
 ResultScene::ResultScene() {
 
@@ -16,10 +16,10 @@ void ResultScene::Execute() {
 
 void ResultScene::Control() {
 
-	if ( fadeMode != FadeMode::None ) return;
+	if ( SceneBase::fadeMode != FadeMode::None ) return;
 
 	if ( CheckHitKey( KEY_INPUT_3 ) ) {
-		fadeMode = FadeMode::Out;
+		SceneBase::fadeMode = FadeMode::Out;
 	}
 }
 

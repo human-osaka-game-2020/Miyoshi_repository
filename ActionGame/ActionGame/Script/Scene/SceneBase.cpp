@@ -1,5 +1,8 @@
 ﻿
-#include "Header/Common.h"
+#include "SceneBase.h"
+#include "TitleScene.h"
+#include "GameScene.h"
+#include "ResultScene.h"
 
 FadeMode SceneBase::fadeMode = FadeMode::None;
 SceneList SceneBase::currentScene = SceneList::Title;
@@ -7,13 +10,8 @@ SceneList SceneBase::currentScene = SceneList::Title;
 SceneBase* SceneBase::sc_title  = nullptr;
 SceneBase* SceneBase::sc_onPlay = nullptr;
 SceneBase* SceneBase::sc_result = nullptr;
-SceneBase* SceneBase::pSceneBase[3] = {
-	sc_title,
-	sc_onPlay,
-	sc_result
-};
-
-int SceneBase::previousScene = 0;
+SceneBase* SceneBase::pSceneBase = nullptr;
+SceneList SceneBase::previousScene = SceneList::Title;
 
 SceneBase::SceneBase() {
 
@@ -28,8 +26,8 @@ enum SceneList SceneBase::GetCurrentScene() {
 }
 
 void SceneBase::ReleaseScene() {
-	delete pSceneBase[GetCurrentScene()];
-	pSceneBase[GetCurrentScene()] = nullptr;
+	delete pSceneBase;
+	pSceneBase = nullptr;
 }
 
 void SceneBase::CreateScene() {
@@ -37,18 +35,18 @@ void SceneBase::CreateScene() {
 	previousScene = currentScene;
 
 	// 移行先のシーンがnullならnewする
-	if ( pSceneBase[currentScene] != nullptr ) return;
+	if ( pSceneBase != nullptr ) return;
 
 	switch ( currentScene )
 	{
 	case SceneList::Title:
-		pSceneBase[currentScene] = new TitleScene();
+		pSceneBase = new TitleScene();
 		break;
 	case SceneList::OnPlay:
-		pSceneBase[currentScene] = new GameScene();
+		pSceneBase = new GameScene();
 		break;
 	case SceneList::Result:
-		pSceneBase[currentScene] = new ResultScene();
+		pSceneBase = new ResultScene();
 		break;
 	default:
 		break;
@@ -57,15 +55,15 @@ void SceneBase::CreateScene() {
 
 void SceneBase::ExecuteScene() {
 	// シーンの処理
-	if ( pSceneBase[previousScene] == nullptr ) return;
-	pSceneBase[previousScene]->Execute();
+	if ( pSceneBase == nullptr ) return;
+	pSceneBase->Execute();
 }
 
 void SceneBase::ReleaseCurrentScene() {
 	// シーンに変化があるなら今のシーンはdeleteする
-	if ( previousScene != SceneBase::GetCurrentScene() ) {
-		delete pSceneBase[previousScene];
-		pSceneBase[previousScene] = nullptr;
+	if( previousScene != currentScene ) {
+		delete pSceneBase;
+		pSceneBase = nullptr;
 	}
 }
 

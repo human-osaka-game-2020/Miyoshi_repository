@@ -19,22 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Script\Function.cpp" />
-    <ClCompile Include="Script\GameScene.cpp" />
-    <ClCompile Include="Script\Player.cpp" />
-    <ClCompile Include="Script\ResultScene.cpp" />
-    <ClCompile Include="Script\SceneBase.cpp" />
-    <ClCompile Include="Script\TitleScene.cpp" />
+    <ClInclude Include="Script\Character\Player.h" />
+    <ClInclude Include="Script\Common.h" />
+    <ClInclude Include="Script\Function\Function.h" />
+    <ClInclude Include="Script\Manager\GameManager.h" />
+    <ClInclude Include="Script\Scene\GameScene.h" />
+    <ClInclude Include="Script\Scene\ResultScene.h" />
+    <ClInclude Include="Script\Scene\SceneBase.h" />
+    <ClInclude Include="Script\Scene\TitleScene.h" />
+    <ClInclude Include="Script\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Script\Header\Common.h" />
-    <ClInclude Include="Script\Header\Function.h" />
-    <ClInclude Include="Script\Header\GameScene.h" />
-    <ClInclude Include="Script\Header\Player.h" />
-    <ClInclude Include="Script\Header\ResultScene.h" />
-    <ClInclude Include="Script\Header\SceneBase.h" />
-    <ClInclude Include="Script\Header\TitleScene.h" />
+    <ClCompile Include="Script\Character\Player.cpp" />
+    <ClCompile Include="Script\Function\Function.cpp" />
+    <ClCompile Include="Script\Main.cpp" />
+    <ClCompile Include="Script\Manager\GameManager.cpp" />
+    <ClCompile Include="Script\Scene\GameScene.cpp" />
+    <ClCompile Include="Script\Scene\ResultScene.cpp" />
+    <ClCompile Include="Script\Scene\SceneBase.cpp" />
+    <ClCompile Include="Script\Scene\TitleScene.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

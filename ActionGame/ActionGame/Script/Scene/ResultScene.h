@@ -1,15 +1,19 @@
 ﻿
-#ifndef SC_ONPLAY_H
-#define SC_ONPLAY_H
+#ifndef SC_RESULT_H
+#define SC_RESULT_H
 
-// ゲーム中のシーン
-class GameScene : public SceneBase {
+#include "../Common.h"
+#include "../Function/Function.h"
+#include "SceneBase.h"
+
+// リザルトシーン
+class ResultScene : public SceneBase {
 public:
 	// コンストラクタ
-	GameScene();
+	ResultScene();
 
 	// デストラクタ
-	~GameScene();
+	~ResultScene();
 
 	// メインループで呼び出すもの
 	void Execute();
