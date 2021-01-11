@@ -14,6 +14,27 @@ enum class SceneList {
 	Result	// リザルト画面
 };
 
+// 方向
+enum class Direction{
+	Up,
+	Left,
+	Right,
+	Down
+};
+
+// 場所
+struct Position{
+	int x;
+	int y;
+};
+
+// 大きさ
+struct Size{
+	int width;
+	int height;
+};
+
+// キャラクターの情報
 struct CharacterData{
 	int x;
 	int y;
@@ -21,15 +42,28 @@ struct CharacterData{
 	int height;
 	int speed;
 	LPCTSTR sprite;
+
+	void operator = ( Position pos ){
+		x = pos.x;
+		y = pos.y;
+	}
+
+	void operator = ( Size size ){
+		width = size.width;
+		height = size.height;
+	}
 };
 
 const int WINDOW_WIDTH = 1280;
 const int WINDOW_HEIGHT = 720;
 
-const int COLOR_WHITE = GetColor(255, 255, 255);
-const int COLOR_BLACK = GetColor(0, 0, 0);
-const int COLOR_BLUE = GetColor(0, 0, 255);
-const int COLOR_GREEN = GetColor(0, 255, 0);
-const int COLOR_RED = GetColor(255, 0, 0);
+namespace Color{
+	const int white = GetColor( 255, 255, 255 );
+	const int black = GetColor( 0, 0, 0 );
+	const int blue = GetColor( 0, 0, 255 );
+	const int green = GetColor( 0, 255, 0 );
+	const int red = GetColor( 255, 0, 0 );
+
+}
 
 #endif // !COMMON_N

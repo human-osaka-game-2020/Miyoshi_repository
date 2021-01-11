@@ -25,8 +25,8 @@ void ResultScene::Control() {
 
 void ResultScene::Draw() {
 
-	DrawString( 10, 10, "Result", COLOR_RED );
-	DrawString( 10, 30, "Press 3 to Title Scene", COLOR_RED );
+	DrawString( 10, 10, "Result", Color::red );
+	DrawString( 10, 30, "Press 3 to Title Scene", Color::red );
 
-	SceneFade( SceneList::Title, 255 / 60, COLOR_BLUE );
+	SceneFade( SceneList::Title, 255 / 60, Color::blue );
 }
