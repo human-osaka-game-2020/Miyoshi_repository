@@ -1,15 +1,19 @@
 ﻿
-#ifndef SC_TITLE_H
-#define SC_TITLE_H
+#ifndef SC_ONPLAY_H
+#define SC_ONPLAY_H
 
-// タイトルシーン
-class TitleScene : public SceneBase {
+#include "../Common.h"
+#include "../Function/Function.h"
+#include "SceneBase.h"
+
+// ゲーム中のシーン
+class GameScene : public SceneBase {
 public:
 	// コンストラクタ
-	TitleScene();
+	GameScene();
 
 	// デストラクタ
-	~TitleScene();
+	~GameScene();
 
 	// メインループで呼び出すもの
 	void Execute();

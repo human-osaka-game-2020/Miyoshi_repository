@@ -2,25 +2,26 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "../Common.h"
+#include "../Function/Function.h"
+
 // プレイヤーに関する変数や処理を管理する
 class Player {
 public:
 	// コンストラクタ
-	Player();
+	Player( CharacterData initData );
 
 	// デストラクタ
 	~Player();
 
 	// 移動
-	static void Move();
+	void Move();
 
 	// 描画
-	static void Draw();
+	void Draw();
 
 private:
-	static int pos_x;
-	static int pos_y;
-	static int speed;
+	CharacterData data;
 };
 
 #endif // !PLAYER_H

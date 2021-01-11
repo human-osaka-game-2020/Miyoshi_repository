@@ -1,5 +1,8 @@
 ﻿
-#include "Script/Header/Common.h"
+#include "Common.h"
+#include "Manager/GameManager.h"
+
+#include "Scene/SceneBase.h"
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
@@ -16,6 +19,8 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	// グラフィックの描画先を裏画面にセット
 	SetDrawScreen ( DX_SCREEN_BACK );
+
+	GameManager::CreateInstance();
 
 	// メインループ
 	while ( true )
@@ -38,6 +43,8 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		// 裏画面の内容を表画面にコピーする
 		ScreenFlip();
 	}
+
+	GameManager::DestroyInstance();
 
 	SceneBase::ReleaseScene();
 	DxLib_End();				// ＤＸライブラリ使用の終了処理

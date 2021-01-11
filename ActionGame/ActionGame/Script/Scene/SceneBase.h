@@ -2,6 +2,9 @@
 #ifndef SC_BASE_H
 #define SC_BASE_H
 
+#include "../Common.h"
+#include "../Function/Function.h"
+
 // 各シーンの基盤
 class SceneBase {
 public:
@@ -55,7 +58,7 @@ protected:
 	/// <param name="fadeColor">フェードの色</param>
 	/// <param name="waitTime">待ち時間</param>
 	void SceneFade( SceneList destinationScene, int fadePower, int fadeColor, int waitTime = 0 );
-	
+
 	/// <summary>
 	/// フェードイン、フェードアウトで別の引数を使用
 	/// </summary>
@@ -76,8 +79,8 @@ private:
 	static SceneBase* sc_title;
 	static SceneBase* sc_onPlay;
 	static SceneBase* sc_result;
-	static SceneBase* pSceneBase[3];
-	static int previousScene;
+	static SceneBase* pSceneBase;
+	static SceneList previousScene;
 
 };
 
