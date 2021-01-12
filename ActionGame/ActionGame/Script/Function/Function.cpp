@@ -131,3 +131,12 @@ InputState GetMouseButtonStatus( int mouseButtonCode ) {
 void SwitchEnabledMouseButtonInput( int mouseButtonCode ) {
 	mouseState[mouseButtonCode] = ( mouseState[mouseButtonCode] == InputState::Invalid ) ? InputState::NotPressed : InputState::Invalid;
 }
+
+bool CheckOffWindow( CharacterData data, bool checkRoof ){
+	if( data.position.x < 0 ) return true;
+	if( data.position.y < 0 && checkRoof == true ) return true;
+	if( data.position.x + data.size.width > WINDOW_WIDTH ) return true;
+	if( data.position.y + data.size.height > WINDOW_HEIGHT ) return true;
+
+	return false;
+}

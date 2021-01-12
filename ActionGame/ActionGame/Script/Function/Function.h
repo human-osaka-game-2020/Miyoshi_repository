@@ -95,4 +95,10 @@ InputState GetMouseButtonStatus( int mouseButtonCode );
 /// <param name="keyCode">入力の無効/有効を切り替えたいマウスボタンのコード</param>
 void SwitchEnabledMouseButtonInput( int mouseButtonCode );
 
+/// @brief 画面外か調べる
+/// @param data キャラクターデータ
+/// @param checkRoof 天井を判定するか
+/// @return 画面外ならtrue
+bool CheckOffWindow( CharacterData data, bool checkRoof = true );
+
 #endif // !FUNCTION_H

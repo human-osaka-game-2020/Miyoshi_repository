@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\Character\Bullet.h" />
     <ClInclude Include="Script\Character\Player.h" />
     <ClInclude Include="Script\Common.h" />
     <ClInclude Include="Script\Function\Function.h" />
     <ClInclude Include="Script\Function\Gauge.h" />
+    <ClInclude Include="Script\Manager\BulletManager.h" />
     <ClInclude Include="Script\Manager\GameManager.h" />
     <ClInclude Include="Script\Scene\GameScene.h" />
     <ClInclude Include="Script\Scene\ResultScene.h" />
@@ -31,10 +33,12 @@
     <ClInclude Include="Script\Singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Script\Character\Bullet.cpp" />
     <ClCompile Include="Script\Character\Player.cpp" />
     <ClCompile Include="Script\Function\Function.cpp" />
     <ClCompile Include="Script\Function\Gauge.cpp" />
     <ClCompile Include="Script\Main.cpp" />
+    <ClCompile Include="Script\Manager\BulletManager.cpp" />
     <ClCompile Include="Script\Manager\GameManager.cpp" />
     <ClCompile Include="Script\Scene\GameScene.cpp" />
     <ClCompile Include="Script\Scene\ResultScene.cpp" />

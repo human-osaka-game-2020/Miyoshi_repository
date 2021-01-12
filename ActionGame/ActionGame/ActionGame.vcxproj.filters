@@ -41,6 +41,10 @@
     <ClInclude Include="Script\Function\Gauge.h">
       <Filter>Function</Filter>
     </ClInclude>
+    <ClInclude Include="Script\Character\Bullet.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Manager\BulletManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Script\Main.cpp" />
@@ -68,5 +72,9 @@
     <ClCompile Include="Script\Function\Gauge.cpp">
       <Filter>Function</Filter>
     </ClCompile>
+    <ClCompile Include="Script\Character\Bullet.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Manager\BulletManager.cpp" />
   </ItemGroup>
 </Project>
