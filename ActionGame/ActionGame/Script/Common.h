@@ -24,38 +24,48 @@ enum class Direction{
 
 // 場所
 struct Position{
-	int x;
-	int y;
+	float x;
+	float y;
 };
 
 // 大きさ
 struct Size{
-	int width;
-	int height;
+	float width;
+	float height;
 };
 
 // キャラクターの情報
 struct CharacterData{
-	int x;
-	int y;
-	int width;
-	int height;
-	int speed;
+	Position position;
+	Size size;
+	float speed;
+	Direction direction;
 	LPCTSTR sprite;
 
-	void operator = ( Position pos ){
-		x = pos.x;
-		y = pos.y;
+	void operator = ( Position pos_ ){
+		position.x = pos_.x;
+		position.y = pos_.y;
 	}
 
-	void operator = ( Size size ){
-		width = size.width;
-		height = size.height;
+	void operator = ( Size size_ ){
+		size.width = size_.width;
+		size.height = size_.height;
 	}
 };
 
-const int WINDOW_WIDTH = 1280;
-const int WINDOW_HEIGHT = 720;
+const float WINDOW_WIDTH = 1280;
+const float WINDOW_HEIGHT = 720;
+
+const float GRAVITY = 1;
+
+namespace Key{
+	const int UP = KEY_INPUT_UP;
+	const int LEFT = KEY_INPUT_LEFT;
+	const int RIGHT = KEY_INPUT_RIGHT;
+	const int DOWN = KEY_INPUT_DOWN;
+	const int JUMP = KEY_INPUT_LSHIFT;
+	const int SHOT = KEY_INPUT_Z;
+};
 
 namespace Color{
 	const int white = GetColor( 255, 255, 255 );
