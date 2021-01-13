@@ -1,10 +1,11 @@
 ﻿
 #include "Player.h"
+#include "../Manager/SpriteManager.h"
 
 Player::Player( CharacterData initData ) :
 	data( initData ),
 	jumpPower( JUMP_POWER ),
-	isJumped( false ),
+	isJumped( true ),
 	isDoubleJumped( false ),
 	jumpCounter( 0 )
 {
@@ -40,7 +41,7 @@ void Player::Move() {
 }
 
 void Player::Draw() {
-	LoadGraphScreen( data.position.x, data.position.y, data.sprite, true );
+	DrawGraphF( data.position.x, data.position.y, data.graphHandle, true );
 	pBulletManager->Draw();
 }
 

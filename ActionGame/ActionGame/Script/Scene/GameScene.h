@@ -6,6 +6,7 @@
 #include "../Function/Function.h"
 #include "SceneBase.h"
 #include "../Function/Gauge.h"
+#include "../Character/Player.h"
 
 // ゲーム中のシーン
 class GameScene : public SceneBase {
@@ -28,8 +29,12 @@ private:
 	// Execute内で呼び出し
 	void Draw();
 
+	Player* GetPlayerData() { return player; }
+	void SetPlayerData( CharacterData data ) { *player = data; }
+
 private:
 	static std::vector<Gauge> gaugeList;
+	Player* player;
 
 };
 

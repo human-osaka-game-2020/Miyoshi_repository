@@ -64,6 +64,7 @@ void SceneBase::ReleaseCurrentScene() {
 	if( previousScene != currentScene ) {
 		delete pSceneBase;
 		pSceneBase = nullptr;
+		InitGraph();
 	}
 }
 

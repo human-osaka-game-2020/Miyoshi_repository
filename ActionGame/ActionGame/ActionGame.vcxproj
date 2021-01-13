@@ -26,6 +26,7 @@
     <ClInclude Include="Script\Function\Gauge.h" />
     <ClInclude Include="Script\Manager\BulletManager.h" />
     <ClInclude Include="Script\Manager\GameManager.h" />
+    <ClInclude Include="Script\Manager\SpriteManager.h" />
     <ClInclude Include="Script\Scene\GameScene.h" />
     <ClInclude Include="Script\Scene\ResultScene.h" />
     <ClInclude Include="Script\Scene\SceneBase.h" />
@@ -40,6 +41,7 @@
     <ClCompile Include="Script\Main.cpp" />
     <ClCompile Include="Script\Manager\BulletManager.cpp" />
     <ClCompile Include="Script\Manager\GameManager.cpp" />
+    <ClCompile Include="Script\Manager\SpriteManager.cpp" />
     <ClCompile Include="Script\Scene\GameScene.cpp" />
     <ClCompile Include="Script\Scene\ResultScene.cpp" />
     <ClCompile Include="Script\Scene\SceneBase.cpp" />

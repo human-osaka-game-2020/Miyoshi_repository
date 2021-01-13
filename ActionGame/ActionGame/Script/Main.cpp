@@ -1,6 +1,7 @@
 ﻿
 #include "Common.h"
 #include "Manager/GameManager.h"
+#include "Manager/SpriteManager.h"
 
 #include "Scene/SceneBase.h"
 
@@ -21,6 +22,7 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	SetDrawScreen ( DX_SCREEN_BACK );
 
 	GameManager::CreateInstance();
+	SpriteManager::CreateInstance();
 
 	// メインループ
 	while ( true )
@@ -44,6 +46,7 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		ScreenFlip();
 	}
 
+	SpriteManager::DestroyInstance();
 	GameManager::DestroyInstance();
 
 	SceneBase::ReleaseScene();

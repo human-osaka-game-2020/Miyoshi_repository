@@ -9,5 +9,5 @@ void Bullet::Control(){
 }
 
 void Bullet::Draw(){
-	LoadGraphScreen( data.position.x + data.size.width, data.position.y + data.size.height, data.sprite, true );
+	DrawGraphF( data.position.x + data.size.width, data.position.y + data.size.height, data.graphHandle, true );
 }
