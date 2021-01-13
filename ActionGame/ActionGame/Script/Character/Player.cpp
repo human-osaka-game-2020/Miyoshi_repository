@@ -4,10 +4,13 @@
 
 Player::Player( CharacterData initData ) :
 	data( initData ),
-	jumpPower( JUMP_POWER ),
+	jumpPower( 0 ),
 	isJumped( true ),
 	isDoubleJumped( false ),
-	jumpCounter( 0 )
+	jumpCounter( 0 ),
+	isFlying( false ),
+	previousPos( {} ),
+	previousHit( {} )
 {
 	pBulletManager = new BulletManager();
 }
@@ -17,23 +20,50 @@ Player::~Player() {
 }
 
 void Player::Move() {
-	Position previousPos = { data.position.x, data.position.y };
+	previousHit = hitChecker;
+	previousPos = data.position;
 
 	if( GetKeyStatus( Key::RIGHT ) == InputState::Pressing ) {
-		data.position.x += data.speed;
-		data.direction = Direction::Right;
+		if( hitChecker.right == false ){
+			data.position.x += data.speed;
+			data.direction = Direction::Right;
+		}
 	}
 	else if( GetKeyStatus( Key::LEFT ) == InputState::Pressing ) {
-		data.position.x -= data.speed;
-		data.direction = Direction::Left;
+		if( hitChecker.left == false ){
+			data.position.x -= data.speed;
+			data.direction = Direction::Left;
+		}
 	}
 
-	if( GetKeyStatus( Key::JUMP ) == InputState::Pressed ) isJumped = true;
-	else if( GetKeyStatus( Key::JUMP ) == InputState::Pressing ) jumpPower += 0.5f;
+	if( GetKeyStatus( Key::JUMP ) == InputState::Pressed ) {
+		if( isFlying == false || isDoubleJumped == false ){
+			data.position.y -= 20;
+			jumpPower = -JUMP_POWER;
+			hitChecker.down = false;
+			if( isFlying == true ){
+				isDoubleJumped = true;
+			}
+		}
+	}
+	else if( GetKeyStatus( Key::JUMP ) == InputState::Pressing ) if(jumpPower < 0) jumpPower -= 0.35f;
 
 	if( GetKeyStatus( Key::SHOT ) == InputState::Pressed ) Shoot();
 
-	if( CheckOffWindow( data, false ) == true ) data = previousPos;
+	if( hitChecker.down == false ){
+		isFlying = true;
+	}
+	else{
+		isFlying = false;
+		isDoubleJumped = false;
+		jumpPower = 0;
+	}
+
+	if( hitChecker.up == true ){
+		jumpPower = 2;
+	}
+
+	if( CheckOffWindow( data, false ) ) data = previousPos;
 
 	Jump();
 
@@ -46,34 +76,93 @@ void Player::Draw() {
 }
 
 void Player::Jump(){
-	if( isJumped == false ){
-		jumpPower = JUMP_POWER;
-		jumpCounter = 0;
-		return;
-	}
+	if( hitChecker.down == true ) return;
 
-	jumpCounter++;
-	float tempJumpPower = jumpPower + -GRAVITY * jumpCounter;
+	data.position.y += jumpPower;
+	jumpPower += GRAVITY;
 
-	// ここのifは「地面に接触したら」に変更する
-	if( data.position.y > 600 - data.size.height ){
-		data.position.y = 600 - data.size.height;
-		isJumped = false;
-		isDoubleJumped = false;
-		return;
-	}
-
-	if( isDoubleJumped == false && jumpCounter >= 2 ){
-		if( GetKeyStatus( Key::JUMP ) == InputState::Pressed ){
-			isDoubleJumped = true;
-			jumpCounter = 0;
-			jumpPower = JUMP_POWER;
-		}
-	}
-
-	data.position.y -= tempJumpPower;
+	if( jumpPower > 30 ) jumpPower = 30; // ブロックの幅より小さく
 }
 
 void Player::Shoot(){
 	pBulletManager->CreateBullet( data );
+}
+
+ObjectTag Player::Collision( ObjectBase* object_ ){
+	if( ( ( data.position.x + data.size.width ) > object_->GetData().position.x ) &&
+		data.position.x < ( object_->GetData().position.x + object_->GetData().size.width ) &&
+		( data.position.y + data.size.height ) > object_->GetData().position.y &&
+		data.position.y < ( object_->GetData().position.y + object_->GetData().size.height ) ){
+		// どの方向からあたっているか
+		// 上から
+		if( ( ( data.position.x + data.size.width - 10 ) > object_->GetData().position.x ) &&
+			( data.position.x + 10 ) < ( object_->GetData().position.x + object_->GetData().size.width ) &&
+			( data.position.y + data.size.height ) > ( object_->GetData().position.y + object_->GetData().size.height ) &&
+			data.position.y < ( object_->GetData().position.y + object_->GetData().size.height ) ){
+			if( object_->GetTag() == ObjectTag::Block_o || object_->GetTag() == ObjectTag::SkeletonBlock_o ){
+				hitChecker.up = true;
+			}
+		}
+
+		// 左から
+		if( data.position.x < ( object_->GetData().position.x + object_->GetData().size.width ) &&
+			data.position.x > object_->GetData().position.x &&
+			( data.position.y + data.size.height - 10 ) > object_->GetData().position.y &&
+			( data.position.y + 10 ) < ( object_->GetData().position.y + object_->GetData().size.height ) ){
+			if( object_->GetTag() == ObjectTag::Block_o || object_->GetTag() == ObjectTag::SkeletonBlock_o ){
+				hitChecker.left = true;
+			}
+		}
+
+		// 右から
+		if( ( data.position.x + data.size.width ) > object_->GetData().position.x &&
+			data.position.x < object_->GetData().position.x &&
+			( data.position.y + data.size.height - 10 ) > object_->GetData().position.y &&
+			( data.position.y + 10 ) < ( object_->GetData().position.y + object_->GetData().size.height ) ){
+			if( object_->GetTag() == ObjectTag::Block_o || object_->GetTag() == ObjectTag::SkeletonBlock_o ){
+				hitChecker.right = true;
+			}
+		}
+
+		// 下から
+		if( ( ( data.position.x + data.size.width - 10 ) > object_->GetData().position.x ) &&
+			( data.position.x + 10 ) < ( object_->GetData().position.x + object_->GetData().size.width ) &&
+			( data.position.y + data.size.height ) > object_->GetData().position.y &&
+			data.position.y < object_->GetData().position.y ){
+			if( object_->GetTag() == ObjectTag::Block_o || object_->GetTag() == ObjectTag::SkeletonBlock_o ){
+				hitChecker.down = true;
+			}
+		}
+
+		// 当たっている場合
+		switch( object_->GetTag() ){
+		case EmptyBlock_o:
+		case SkeletonBlock_o:
+			object_->Control();
+			break;
+		case Okonomiyaki_o:
+			return ObjectTag::Okonomiyaki_o;
+		case Sauce_o:
+			isDoubleJumped = false;
+			break;
+		case Warp_o:
+			return ObjectTag::Warp_o;
+		// 今のところあたってもなにもない方達
+		case Air_o: break;
+		case Block_o: break;
+		case Save_o: break;
+		case objMax_o: break;
+		default: break;
+		}
+	}
+
+	return ObjectTag::Air_o;
+}
+
+void Player::BulletCollision( ObjectBase* object_, int stageNumber_ ){
+	pBulletManager->Collision( object_, data.position, stageNumber_ );
+}
+
+void Player::ResetHitData(){
+	hitChecker = { false, false, false, false };
 }

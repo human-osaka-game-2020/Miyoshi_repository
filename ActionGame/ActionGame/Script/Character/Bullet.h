@@ -10,7 +10,7 @@ public:
 	~Bullet(){};
 
 public:
-	CharacterData GetCharacterData() const { return data; }
+	CharacterData GetData() const { return data; }
 	void Control();
 	void Draw();
 

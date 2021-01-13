@@ -12,6 +12,7 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	SetGraphMode ( WINDOW_WIDTH, WINDOW_HEIGHT, 32, 60 );
 	ChangeWindowMode ( true ); // ウィンドウモードに変更
+	SetBackgroundColor( 128, 255, 255 );
 
 	if ( DxLib_Init () == -1 )	// ＤＸライブラリ初期化処理
 	{
@@ -23,6 +24,8 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	GameManager::CreateInstance();
 	SpriteManager::CreateInstance();
+
+	GameManager::GetInstance()->LoadStage();
 
 	// メインループ
 	while ( true )

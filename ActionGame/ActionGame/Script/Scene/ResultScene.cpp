@@ -1,8 +1,9 @@
 ﻿
 #include "ResultScene.h"
+#include "../Manager/GameManager.h"
 
 ResultScene::ResultScene() {
-
+	GameManager::GetInstance()->DataSaving( { 0, 0, 0 } );
 }
 
 ResultScene::~ResultScene() {
