@@ -7,6 +7,7 @@
 #include "SceneBase.h"
 #include "../Function/Gauge.h"
 #include "../Character/Player.h"
+#include "../Object/ObjectBase.h"
 
 // ゲーム中のシーン
 class GameScene : public SceneBase {
@@ -20,6 +21,9 @@ public:
 	// メインループで呼び出すもの
 	void Execute();
 
+	// 次のステージへ
+	void NextStage();
+
 private:
 	// ゲーム処理
 	// Execute内で呼び出し
@@ -32,9 +36,17 @@ private:
 	Player* GetPlayerData() { return player; }
 	void SetPlayerData( CharacterData data ) { *player = data; }
 
+	// 死んだときとかに呼ぶやつ
+	void Reset();
+
+	// 衝突判定
+	void Collision();
+
 private:
 	static std::vector<Gauge> gaugeList;
 	Player* player;
+	static int stageNumber;
+	static std::vector<std::vector<ObjectBase*>> stageData;
 
 };
 

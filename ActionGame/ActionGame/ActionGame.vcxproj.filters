@@ -13,6 +13,9 @@
     <Filter Include="Function">
       <UniqueIdentifier>{22176cc3-c6b0-4c24-b053-ddff178dfaf8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{93717506-6ae1-4c03-8dd4-c4c444622fcf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\Common.h" />
@@ -50,6 +53,24 @@
     <ClInclude Include="Script\Manager\SpriteManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Script\Object\Block.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Object\ObjectBase.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Object\Okonomiyaki.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Object\Sauce.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Object\Save.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Object\Warp.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Script\Main.cpp" />
@@ -85,6 +106,21 @@
     </ClCompile>
     <ClCompile Include="Script\Manager\SpriteManager.cpp">
       <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Object\Block.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Object\Okonomiyaki.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Object\Sauce.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Object\Save.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Object\Warp.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

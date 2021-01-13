@@ -4,6 +4,9 @@
 
 #include <iostream>
 #include <vector>
+#include <Windows.h>
+#include <fstream>
+#include <string>
 
 #include "DxLib.h"
 
@@ -20,6 +23,20 @@ enum class Direction{
 	Left,
 	Right,
 	Down
+};
+
+// オブジェクト一覧
+enum ObjectTag{
+	Air_o,	// 空気
+	Block_o,	// ブロック
+	EmptyBlock_o,	// あたると消える
+	SkeletonBlock_o,	// あたると出現
+	Save_o,	// 撃つとセーブ
+	Okonomiyaki_o,	// あたると死ぬ
+	Sauce_o,	// 無限ジャンプ
+	Warp_o,		// 次のステージへ
+
+	objMax_o
 };
 
 // 場所
@@ -53,10 +70,33 @@ struct CharacterData{
 	}
 };
 
+struct ObjectData{
+	Position position;
+	Size size;
+	int graphHandle;
+	ObjectTag tag;
+
+	void operator = ( Position pos_ ){
+		position.x = pos_.x;
+		position.y = pos_.y;
+	}
+
+	void operator = ( Size size_ ){
+		size.width = size_.width;
+		size.height = size_.height;
+	}
+};
+
 const float WINDOW_WIDTH = 1280;
 const float WINDOW_HEIGHT = 720;
 
-const float GRAVITY = 1;
+const float STAGE_WIDTH = 20;
+const float STAGE_HEIGHT = 12;
+
+const float CHIP_WIDTH = 64;
+const float CHIP_HEIGHT = 64;
+
+const float GRAVITY = 0.6f;
 
 namespace Key{
 	const int UP = KEY_INPUT_UP;
@@ -65,6 +105,7 @@ namespace Key{
 	const int DOWN = KEY_INPUT_DOWN;
 	const int JUMP = KEY_INPUT_LSHIFT;
 	const int SHOT = KEY_INPUT_Z;
+	const int RESET = KEY_INPUT_R;
 };
 
 namespace Color{
