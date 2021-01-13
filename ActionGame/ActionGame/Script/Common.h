@@ -40,7 +40,7 @@ struct CharacterData{
 	Size size;
 	float speed;
 	Direction direction;
-	LPCTSTR sprite;
+	int graphHandle;
 
 	void operator = ( Position pos_ ){
 		position.x = pos_.x;

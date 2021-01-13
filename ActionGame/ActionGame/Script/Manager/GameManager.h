@@ -9,15 +9,8 @@
 
 class GameManager : public Singleton<GameManager>{
 public:
-	GameManager();
+	GameManager(){};
 	~GameManager(){};
-
-public:
-	Player* GetPlayerData() { return &player; }
-	void SetPlayerData( CharacterData data ) { player = data; }
-
-private:
-	Player player;
 };
 
 #endif // !GAME_MANAGER_H

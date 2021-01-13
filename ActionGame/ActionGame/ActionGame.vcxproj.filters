@@ -44,7 +44,12 @@
     <ClInclude Include="Script\Character\Bullet.h">
       <Filter>Character</Filter>
     </ClInclude>
-    <ClInclude Include="Script\Manager\BulletManager.h" />
+    <ClInclude Include="Script\Manager\BulletManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Script\Manager\SpriteManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Script\Main.cpp" />
@@ -75,6 +80,11 @@
     <ClCompile Include="Script\Character\Bullet.cpp">
       <Filter>Character</Filter>
     </ClCompile>
-    <ClCompile Include="Script\Manager\BulletManager.cpp" />
+    <ClCompile Include="Script\Manager\BulletManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Manager\SpriteManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
