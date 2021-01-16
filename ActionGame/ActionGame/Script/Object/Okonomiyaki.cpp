@@ -7,5 +7,5 @@ void Okonomiyaki::Control(){
 }
 
 void Okonomiyaki::Draw(){
-	DrawGraph( data.position.x - 16, data.position.y - 16, data.graphHandle, true );
+	DrawGraph( data.position.x - 18, data.position.y - 18, data.graphHandle, true );
 }

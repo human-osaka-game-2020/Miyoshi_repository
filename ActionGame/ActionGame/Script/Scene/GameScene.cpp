@@ -64,7 +64,7 @@ void GameScene::Draw() {
 		gaugeList.at( i ).Draw();
 	}
 
-	DrawFormatString( 0, 0, Color::black, "Death : %d", GameManager::GetInstance()->GetDeathCounter() );
+	DrawFormatString( 0, 0, Color::red, "Death : %d", GameManager::GetInstance()->GetDeathCounter() );
 
 	SceneFade( SceneList::Result, 255 / 60, Color::black );
 }
@@ -100,7 +100,7 @@ void GameScene::Reset(){
 					sprIns->GetGraphHandle( GraphName::gSave ), ObjectTag::Save_o } );
 				break;
 			case Okonomiyaki_o:
-				stageData.at( y ).at( x ) = new Okonomiyaki( { {x * CHIP_WIDTH + 16, y * CHIP_HEIGHT + 16}, {CHIP_WIDTH - 32, CHIP_HEIGHT - 32},
+				stageData.at( y ).at( x ) = new Okonomiyaki( { {x * CHIP_WIDTH + 18, y * CHIP_HEIGHT + 18}, {CHIP_WIDTH - 36, CHIP_HEIGHT - 36},
 					sprIns->GetGraphHandle( GraphName::gOkonomiyaki ), ObjectTag::Okonomiyaki_o } );
 				break;
 			case Sauce_o:

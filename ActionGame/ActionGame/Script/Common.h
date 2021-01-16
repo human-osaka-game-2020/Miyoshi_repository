@@ -88,7 +88,7 @@ struct ObjectData{
 };
 
 const float WINDOW_WIDTH = 1280;
-const float WINDOW_HEIGHT = 720;
+const float WINDOW_HEIGHT = 768;
 
 const float STAGE_WIDTH = 20;
 const float STAGE_HEIGHT = 12;
