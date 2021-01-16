@@ -1,6 +1,7 @@
 ﻿
 #include "Player.h"
 #include "../Manager/SpriteManager.h"
+#include "../Manager/SoundManager.h"
 
 Player::Player( CharacterData initData ) :
 	data( initData ),
@@ -13,6 +14,11 @@ Player::Player( CharacterData initData ) :
 	previousHit( {} )
 {
 	pBulletManager = new BulletManager();
+
+	SoundManager* sndIns = SoundManager::GetInstance();
+	sndIns->LoadSoundHandle( SoundName::sJump );
+	sndIns->LoadSoundHandle( SoundName::sDoubleJump );
+	sndIns->LoadSoundHandle( SoundName::sShoot );
 }
 
 Player::~Player() {
@@ -37,12 +43,16 @@ void Player::Move() {
 	}
 
 	if( GetKeyStatus( Key::JUMP ) == InputState::Pressed ) {
-		if( isFlying == false || isDoubleJumped == false ){
+		if( ( isFlying == false || isDoubleJumped == false ) && hitChecker.up == false ){
 			data.position.y -= 20;
 			jumpPower = -JUMP_POWER;
 			hitChecker.down = false;
 			if( isFlying == true ){
 				isDoubleJumped = true;
+				PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sDoubleJump ), DX_PLAYTYPE_BACK );
+			}
+			else{
+				PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sJump ), DX_PLAYTYPE_BACK );
 			}
 		}
 	}
@@ -85,6 +95,7 @@ void Player::Jump(){
 }
 
 void Player::Shoot(){
+	PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sShoot ), DX_PLAYTYPE_BACK );
 	pBulletManager->CreateBullet( data );
 }
 
@@ -137,26 +148,28 @@ ObjectTag Player::Collision( ObjectBase* object_ ){
 		// 当たっている場合
 		switch( object_->GetTag() ){
 		case EmptyBlock_o:
-		case SkeletonBlock_o:
+			PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sBlockDestroy ), DX_PLAYTYPE_BACK );
 			object_->Control();
 			break;
-		case Okonomiyaki_o:
-			return ObjectTag::Okonomiyaki_o;
+		case SkeletonBlock_o:
+			PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sBlockSpawn ), DX_PLAYTYPE_BACK );
+			object_->Control();
+			break;
 		case Sauce_o:
 			isDoubleJumped = false;
 			break;
-		case Warp_o:
-			return ObjectTag::Warp_o;
-		// 今のところあたってもなにもない方達
+			// 今のところあたってもなにもない方達
+		case Warp_o: break;
+		case Okonomiyaki_o: break;
 		case Air_o: break;
 		case Block_o: break;
 		case Save_o: break;
 		case objMax_o: break;
 		default: break;
 		}
-	}
 
-	return ObjectTag::Air_o;
+		return object_->GetTag();
+	}
 }
 
 void Player::BulletCollision( ObjectBase* object_, int stageNumber_ ){

@@ -65,6 +65,7 @@ void SceneBase::ReleaseCurrentScene() {
 		delete pSceneBase;
 		pSceneBase = nullptr;
 		InitGraph();
+		InitSoundMem();
 	}
 }
 

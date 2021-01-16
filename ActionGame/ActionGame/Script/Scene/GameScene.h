@@ -42,6 +42,8 @@ private:
 	// 衝突判定
 	void Collision();
 
+	void SceneDataLoad();
+
 private:
 	static std::vector<Gauge> gaugeList;
 	Player* player;

@@ -15,6 +15,11 @@
    * ビルドできない場合はVisual Studioを再起動する。
 
 ---
+## 使用素材
+DOVA-SYNDROME
+魔王魂
+
+---
 ## 開発環境
 Windows 10 Home/Pro　64bit - ver 1909  
 Visual Studio Community - ver 16.7.5  

@@ -71,6 +71,9 @@
     <ClInclude Include="Script\Object\Warp.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Script\Manager\SoundManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Script\Main.cpp" />
@@ -121,6 +124,9 @@
     </ClCompile>
     <ClCompile Include="Script\Object\Warp.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Script\Manager\SoundManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
