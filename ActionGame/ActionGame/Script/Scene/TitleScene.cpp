@@ -2,6 +2,7 @@
 #include "TitleScene.h"
 #include "../Manager/GameManager.h"
 #include "../Manager/SpriteManager.h"
+#include "../Manager/SoundManager.h"
 
 TitleScene::TitleScene() :
 	currentSelect( 0 ),
@@ -9,6 +10,12 @@ TitleScene::TitleScene() :
 {
 	SetFontSize( 48 );
 	SpriteManager::GetInstance()->LoadGraphHandle( GraphName::gTitle );
+
+	SoundManager* sndIns = SoundManager::GetInstance();
+	sndIns->LoadSoundHandle( SoundName::sSelect );
+	sndIns->LoadSoundHandle( SoundName::sEnter );
+	sndIns->LoadSoundHandle( SoundName::bTitle );
+	PlaySoundMem( sndIns->GetSoundHandle( SoundName::bTitle ), DX_PLAYTYPE_LOOP );
 }
 
 TitleScene::~TitleScene() {
@@ -40,16 +47,21 @@ void TitleScene::Draw() {
 }
 
 bool TitleScene::SelectMenu(){
+	SoundManager* sndIns = SoundManager::GetInstance();
+
 	if( GetKeyStatus( KEY_INPUT_UP ) == InputState::Pressed ){
+		PlaySoundMem( sndIns->GetSoundHandle( SoundName::sSelect ), DX_PLAYTYPE_BACK );
 		currentSelect--;
 		if( currentSelect <= 0 ) currentSelect = 0;
 	}
 	else if( GetKeyStatus( KEY_INPUT_DOWN ) == InputState::Pressed ){
+		PlaySoundMem( sndIns->GetSoundHandle( SoundName::sSelect ), DX_PLAYTYPE_BACK );
 		currentSelect++;
 		if( currentSelect >= Menu::MenuMax ) currentSelect--;
 	}
 
 	if( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed ){
+		PlaySoundMem( sndIns->GetSoundHandle( SoundName::sEnter ), DX_PLAYTYPE_BACK );
 		if( currentSelect == 0 ) GameManager::GetInstance()->DataSaving( { 0, 0, 0, 0 } );
 		return true;
 	}

@@ -26,6 +26,7 @@
     <ClInclude Include="Script\Function\Gauge.h" />
     <ClInclude Include="Script\Manager\BulletManager.h" />
     <ClInclude Include="Script\Manager\GameManager.h" />
+    <ClInclude Include="Script\Manager\SoundManager.h" />
     <ClInclude Include="Script\Manager\SpriteManager.h" />
     <ClInclude Include="Script\Object\Block.h" />
     <ClInclude Include="Script\Object\ObjectBase.h" />
@@ -47,6 +48,7 @@
     <ClCompile Include="Script\Main.cpp" />
     <ClCompile Include="Script\Manager\BulletManager.cpp" />
     <ClCompile Include="Script\Manager\GameManager.cpp" />
+    <ClCompile Include="Script\Manager\SoundManager.cpp" />
     <ClCompile Include="Script\Manager\SpriteManager.cpp" />
     <ClCompile Include="Script\Object\Block.cpp" />
     <ClCompile Include="Script\Object\Okonomiyaki.cpp" />

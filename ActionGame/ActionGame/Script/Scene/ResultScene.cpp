@@ -2,12 +2,21 @@
 #include "ResultScene.h"
 #include "../Manager/GameManager.h"
 #include "../Manager/SpriteManager.h"
+#include "../Manager/SoundManager.h"
 
 ResultScene::ResultScene() {
 	GameManager* gameIns = GameManager::GetInstance();
 	SaveState saveTemp = gameIns->DataLoading();
 	gameIns->DataSaving( { saveTemp.x, saveTemp.y, saveTemp.stageNumber,gameIns->GetDeathCounter() } );
 	SpriteManager::GetInstance()->LoadGraphHandle( GraphName::gResult );
+
+	SoundManager* sndIns = SoundManager::GetInstance();
+	sndIns->LoadSoundHandle( SoundName::sClear );
+	sndIns->LoadSoundHandle( SoundName::sEnter );
+	sndIns->LoadSoundHandle( SoundName::bResult );
+
+	PlaySoundMem( sndIns->GetSoundHandle( SoundName::sClear ), DX_PLAYTYPE_BACK );
+	PlaySoundMem( sndIns->GetSoundHandle( SoundName::bResult ), DX_PLAYTYPE_LOOP );
 }
 
 ResultScene::~ResultScene() {
@@ -24,6 +33,7 @@ void ResultScene::Control() {
 	if ( SceneBase::fadeMode != FadeMode::None ) return;
 
 	if ( CheckHitKey( KEY_INPUT_RETURN ) ) {
+		PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sEnter ), DX_PLAYTYPE_BACK );
 		SceneBase::fadeMode = FadeMode::Out;
 	}
 }

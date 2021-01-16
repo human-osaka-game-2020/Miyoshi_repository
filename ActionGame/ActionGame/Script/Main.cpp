@@ -2,6 +2,7 @@
 #include "Common.h"
 #include "Manager/GameManager.h"
 #include "Manager/SpriteManager.h"
+#include "Manager/SoundManager.h"
 
 #include "Scene/SceneBase.h"
 
@@ -24,6 +25,7 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	GameManager::CreateInstance();
 	SpriteManager::CreateInstance();
+	SoundManager::CreateInstance();
 
 	GameManager::GetInstance()->LoadStage();
 
@@ -49,6 +51,7 @@ int WINAPI WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		ScreenFlip();
 	}
 
+	SoundManager::DestroyInstance();
 	SpriteManager::DestroyInstance();
 	GameManager::DestroyInstance();
 

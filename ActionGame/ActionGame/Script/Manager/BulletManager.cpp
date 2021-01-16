@@ -2,6 +2,12 @@
 #include "BulletManager.h"
 #include "SpriteManager.h"
 #include "GameManager.h"
+#include "SoundManager.h"
+
+BulletManager::BulletManager(){
+	SoundManager* sndIns = SoundManager::GetInstance();
+	sndIns->LoadSoundHandle( SoundName::sSave );
+}
 
 void BulletManager::Control(){
 	for( int i = 0; i < bullets.size(); i++ ){
@@ -53,6 +59,7 @@ void BulletManager::Collision( ObjectBase* object_, Position pos_, int stageNumb
 					// 当たってる
 					if( object_->GetTag() == ObjectTag::Save_o ){
 						ins->DataSaving( { pos_.x, pos_.y, stageNumber_, ins->GetDeathCounter() } );
+						PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sSave ), DX_PLAYTYPE_BACK );
 					}
 
 					delete bullets.at( i );

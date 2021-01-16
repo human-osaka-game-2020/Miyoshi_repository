@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "../Manager/GameManager.h"
 #include "../Manager/SpriteManager.h"
+#include "../Manager/SoundManager.h"
 #include "../Object/Block.h"
 #include "../Object/Okonomiyaki.h"
 #include "../Object/Sauce.h"
@@ -13,18 +14,7 @@ std::vector<Gauge> GameScene::gaugeList;
 std::vector<std::vector<ObjectBase*>> GameScene::stageData;
 
 GameScene::GameScene() {
-	SpriteManager* sprIns = SpriteManager::GetInstance();
-	sprIns->LoadGraphHandle( GraphName::gPlayer );
-	sprIns->LoadGraphHandle( GraphName::gBullet );
-	sprIns->LoadGraphHandle( GraphName::gBlock );
-	sprIns->LoadGraphHandle( GraphName::gEmptyBlock );
-	sprIns->LoadGraphHandle( GraphName::gOkonomiyaki );
-	sprIns->LoadGraphHandle( GraphName::gSauce );
-	sprIns->LoadGraphHandle( GraphName::gSave );
-	sprIns->LoadGraphHandle( GraphName::gWarp );
-	stageNumber = GameManager::GetInstance()->DataLoading().stageNumber;
-	GameManager::GetInstance()->SetDeathCounter( GameManager::GetInstance()->DataLoading().deathCount );
-
+	SceneDataLoad();
 	Reset();
 }
 
@@ -41,6 +31,7 @@ void GameScene::Control() {
 	if ( fadeMode != FadeMode::None ) return;
 
 	if( GetKeyStatus( Key::RESET ) == InputState::Pressed ){
+		PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sReset ), DX_PLAYTYPE_BACK );
 		Reset();
 		return;
 	}
@@ -109,7 +100,7 @@ void GameScene::Reset(){
 					sprIns->GetGraphHandle( GraphName::gSave ), ObjectTag::Save_o } );
 				break;
 			case Okonomiyaki_o:
-				stageData.at( y ).at( x ) = new Okonomiyaki( { {x * CHIP_WIDTH + 2, y * CHIP_HEIGHT + 2}, {CHIP_WIDTH - 4, CHIP_HEIGHT - 4},
+				stageData.at( y ).at( x ) = new Okonomiyaki( { {x * CHIP_WIDTH + 16, y * CHIP_HEIGHT + 16}, {CHIP_WIDTH - 32, CHIP_HEIGHT - 32},
 					sprIns->GetGraphHandle( GraphName::gOkonomiyaki ), ObjectTag::Okonomiyaki_o } );
 				break;
 			case Sauce_o:
@@ -127,9 +118,14 @@ void GameScene::Reset(){
 			}
 		}
 	}
+	StopSoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::bGame ) );
+	StopSoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sGameOver ) );
+	PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::bGame ), DX_PLAYTYPE_LOOP );
 }
 
 void GameScene::Collision(){
+	SoundManager* sndIns = SoundManager::GetInstance();
+
 	for( int y = 0; y < STAGE_HEIGHT; y++ ){
 		for( int x = 0; x < STAGE_WIDTH; x++ ){
 			if( stageData.at( y ).at( x ) != nullptr ){
@@ -140,10 +136,14 @@ void GameScene::Collision(){
 				switch( player->Collision( stageData.at( y ).at( x ) )){
 				case ObjectTag::Okonomiyaki_o:
 					GameManager::GetInstance()->AddDeathCounter();
+					StopSoundMem( sndIns->GetSoundHandle( SoundName::bGame ) );
+					PlaySoundMem( sndIns->GetSoundHandle( SoundName::sDeath ), DX_PLAYTYPE_BACK );
+					PlaySoundMem( sndIns->GetSoundHandle( SoundName::sGameOver ), DX_PLAYTYPE_BACK );
 					delete player;
 					player = nullptr;
 					return;
 				case ObjectTag::Warp_o:
+					PlaySoundMem( sndIns->GetSoundHandle( SoundName::sWarp ), DX_PLAYTYPE_BACK );
 					NextStage();
 					return;
 				}
@@ -161,4 +161,28 @@ void GameScene::NextStage(){
 
 	GameManager::GetInstance()->DataSaving( { 0,0,stageNumber, GameManager::GetInstance()->GetDeathCounter() } );
 	Reset();
+}
+
+void GameScene::SceneDataLoad(){
+	SpriteManager* sprIns = SpriteManager::GetInstance();
+	sprIns->LoadGraphHandle( GraphName::gPlayer );
+	sprIns->LoadGraphHandle( GraphName::gBullet );
+	sprIns->LoadGraphHandle( GraphName::gBlock );
+	sprIns->LoadGraphHandle( GraphName::gEmptyBlock );
+	sprIns->LoadGraphHandle( GraphName::gOkonomiyaki );
+	sprIns->LoadGraphHandle( GraphName::gSauce );
+	sprIns->LoadGraphHandle( GraphName::gSave );
+	sprIns->LoadGraphHandle( GraphName::gWarp );
+
+	SoundManager* sndIns = SoundManager::GetInstance();
+	sndIns->LoadSoundHandle( SoundName::sBlockDestroy );
+	sndIns->LoadSoundHandle( SoundName::sBlockSpawn );
+	sndIns->LoadSoundHandle( SoundName::sDeath );
+	sndIns->LoadSoundHandle( SoundName::sWarp );
+	sndIns->LoadSoundHandle( SoundName::sReset );
+	sndIns->LoadSoundHandle( SoundName::bGame );
+	sndIns->LoadSoundHandle( SoundName::sGameOver );
+
+	stageNumber = GameManager::GetInstance()->DataLoading().stageNumber;
+	GameManager::GetInstance()->SetDeathCounter( GameManager::GetInstance()->DataLoading().deathCount );
 }

@@ -9,7 +9,7 @@
 
 class BulletManager{
 public:
-	BulletManager(){};
+	BulletManager();
 	~BulletManager(){};
 
 public:
