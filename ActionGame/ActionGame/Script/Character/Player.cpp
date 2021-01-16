@@ -167,9 +167,9 @@ ObjectTag Player::Collision( ObjectBase* object_ ){
 		case objMax_o: break;
 		default: break;
 		}
-
 		return object_->GetTag();
 	}
+	if( data.position.y >= 1000 ) return ObjectTag::Okonomiyaki_o;
 }
 
 void Player::BulletCollision( ObjectBase* object_, int stageNumber_ ){
