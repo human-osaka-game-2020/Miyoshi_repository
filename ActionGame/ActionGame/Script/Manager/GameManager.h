@@ -11,11 +11,12 @@ struct SaveState{
 	float x;
 	float y;
 	int stageNumber;
+	int deathCount;
 };
 
 class GameManager : public Singleton<GameManager>{
 public:
-	GameManager(){};
+	GameManager() :deathCounter( 0 ){};
 	~GameManager(){};
 
 public:
@@ -32,8 +33,13 @@ public:
 	// ロード
 	SaveState DataLoading();
 
+	void AddDeathCounter();
+	int GetDeathCounter() const { return deathCounter; }
+	void SetDeathCounter( int deathCounter_ ) { deathCounter = deathCounter_; }
+
 private:
 	std::vector<std::vector<std::vector<ObjectTag>>> stageData;
+	int deathCounter;
 
 };
 

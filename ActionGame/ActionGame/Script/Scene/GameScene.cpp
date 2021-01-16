@@ -23,6 +23,7 @@ GameScene::GameScene() {
 	sprIns->LoadGraphHandle( GraphName::gSave );
 	sprIns->LoadGraphHandle( GraphName::gWarp );
 	stageNumber = GameManager::GetInstance()->DataLoading().stageNumber;
+	GameManager::GetInstance()->SetDeathCounter( GameManager::GetInstance()->DataLoading().deathCount );
 
 	Reset();
 }
@@ -56,9 +57,6 @@ void GameScene::Control() {
 }
 
 void GameScene::Draw() {
-	DrawString( 10, 10, "OnPlay", Color::red );
-	DrawString( 10, 30, "Press 2 to Result Scene", Color::red );
-
 	for( int y = 0; y < STAGE_HEIGHT; y++ ){
 		for( int x = 0; x < STAGE_WIDTH; x++ ){
 			if( stageData.at( y ).at( x ) != nullptr ){
@@ -75,7 +73,9 @@ void GameScene::Draw() {
 		gaugeList.at( i ).Draw();
 	}
 
-	SceneFade( SceneList::Result, 255 / 120, 255 / 60, Color::white, Color::blue, 30 );
+	DrawFormatString( 0, 0, Color::black, "Death : %d", GameManager::GetInstance()->GetDeathCounter() );
+
+	SceneFade( SceneList::Result, 255 / 60, Color::black );
 }
 
 void GameScene::Reset(){
@@ -139,6 +139,7 @@ void GameScene::Collision(){
 				// プレイヤー判定
 				switch( player->Collision( stageData.at( y ).at( x ) )){
 				case ObjectTag::Okonomiyaki_o:
+					GameManager::GetInstance()->AddDeathCounter();
 					delete player;
 					player = nullptr;
 					return;
@@ -158,6 +159,6 @@ void GameScene::NextStage(){
 		return;
 	}
 
-	GameManager::GetInstance()->DataSaving( { 0,0,stageNumber } );
+	GameManager::GetInstance()->DataSaving( { 0,0,stageNumber, GameManager::GetInstance()->GetDeathCounter() } );
 	Reset();
 }

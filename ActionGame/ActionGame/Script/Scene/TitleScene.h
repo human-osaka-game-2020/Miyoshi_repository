@@ -26,6 +26,18 @@ private:
 	// 描画処理
 	// Execute内で呼び出し
 	void Draw();
+
+	bool SelectMenu();
+
+	int currentSelect;
+	int pointerRadius;
+
+	enum Menu{
+		NewGame_m,	// 最初から
+		Continue_m,	// つづきから
+
+		MenuMax
+	};
 };
 
 #endif

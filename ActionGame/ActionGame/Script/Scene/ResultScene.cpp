@@ -1,9 +1,13 @@
 ﻿
 #include "ResultScene.h"
 #include "../Manager/GameManager.h"
+#include "../Manager/SpriteManager.h"
 
 ResultScene::ResultScene() {
-	GameManager::GetInstance()->DataSaving( { 0, 0, 0 } );
+	GameManager* gameIns = GameManager::GetInstance();
+	SaveState saveTemp = gameIns->DataLoading();
+	gameIns->DataSaving( { saveTemp.x, saveTemp.y, saveTemp.stageNumber,gameIns->GetDeathCounter() } );
+	SpriteManager::GetInstance()->LoadGraphHandle( GraphName::gResult );
 }
 
 ResultScene::~ResultScene() {
@@ -19,15 +23,15 @@ void ResultScene::Control() {
 
 	if ( SceneBase::fadeMode != FadeMode::None ) return;
 
-	if ( CheckHitKey( KEY_INPUT_3 ) ) {
+	if ( CheckHitKey( KEY_INPUT_RETURN ) ) {
 		SceneBase::fadeMode = FadeMode::Out;
 	}
 }
 
 void ResultScene::Draw() {
+	DrawGraph( 0, 0, SpriteManager::GetInstance()->GetGraphHandle( GraphName::gResult ), false );
 
-	DrawString( 10, 10, "Result", Color::red );
-	DrawString( 10, 30, "Press 3 to Title Scene", Color::red );
+	DrawFormatString( WINDOW_WIDTH / 2 - 192, WINDOW_HEIGHT - 200, Color::black, "死亡回数：%d", GameManager::GetInstance()->GetDeathCounter() );
 
-	SceneFade( SceneList::Title, 255 / 60, Color::blue );
+	SceneFade( SceneList::Title, 255 / 60, Color::black );
 }
