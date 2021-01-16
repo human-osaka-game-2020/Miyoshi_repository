@@ -14,6 +14,8 @@ enum GraphName{
 	gSauce,
 	gSave,
 	gWarp,
+	gTitle,
+	gResult,
 
 	GraphMax
 };
@@ -45,7 +47,9 @@ private:
 		{ 64, 64, "Sprite/Object/Okonomiyaki.png"},
 		{ 64, 64, "Sprite/Object/Sauce.png"},
 		{ 64, 64, "Sprite/Object/Save.png"},
-		{ 64, 64, "Sprite/Object/Warp.png"}
+		{ 64, 64, "Sprite/Object/Warp.png"},
+		{ 1280, 720, "Sprite/Title.png"},
+		{ 1280, 720, "Sprite/Result.png"}
 	};
 };
 

@@ -52,7 +52,7 @@ void BulletManager::Collision( ObjectBase* object_, Position pos_, int stageNumb
 					object_->GetTag() == ObjectTag::Save_o ){
 					// 当たってる
 					if( object_->GetTag() == ObjectTag::Save_o ){
-						ins->DataSaving( { pos_.x, pos_.y, stageNumber_ } );
+						ins->DataSaving( { pos_.x, pos_.y, stageNumber_, ins->GetDeathCounter() } );
 					}
 
 					delete bullets.at( i );
