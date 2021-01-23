@@ -76,7 +76,7 @@ void GameManager::LoadStage(){
 
 }
 
-void GameManager::DataSaving( SaveState data_ ){
+void GameManager::Save( SaveState data_ ){
 	std::ofstream file( "SaveData.txt" );
 
 	file.clear();
@@ -87,7 +87,7 @@ void GameManager::DataSaving( SaveState data_ ){
 	file.close();
 }
 
-SaveState GameManager::DataLoading(){
+SaveState GameManager::Load(){
 	std::ifstream file( "SaveData.txt" );
 
 	// ファイルがない場合は初期地点へ
@@ -117,8 +117,8 @@ std::vector<std::vector<ObjectTag>> GameManager::GetStageData( int stageNumber_ 
 }
 
 void GameManager::AddDeathCounter(){
-	SaveState dataTemp = DataLoading();
+	SaveState dataTemp = Load();
 	dataTemp.deathCount++;
-	DataSaving( { dataTemp } );
+	Save( { dataTemp } );
 	deathCounter++;
 }

@@ -5,6 +5,8 @@
 #include "../Common.h"
 #include "../Function/Function.h"
 #include "SceneBase.h"
+#include "../Manager/SpriteManager.h"
+#include "../Manager/SoundManager.h"
 
 // タイトルシーン
 class TitleScene : public SceneBase {
@@ -19,6 +21,11 @@ public:
 	void Execute();
 
 private:
+	enum class Menu{
+		NewGame_m,	// 最初から
+		Continue_m	// つづきから
+	};
+
 	// ゲーム処理
 	// Execute内で呼び出し
 	void Control();
@@ -29,15 +36,11 @@ private:
 
 	bool SelectMenu();
 
-	int currentSelect;
+	Menu currentSelection;
 	int pointerRadius;
 
-	enum Menu{
-		NewGame_m,	// 最初から
-		Continue_m,	// つづきから
-
-		MenuMax
-	};
+	SpriteManager* sprIns;
+	SoundManager* sndIns;
 };
 
 #endif

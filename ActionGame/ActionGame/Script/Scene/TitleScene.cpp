@@ -1,21 +1,21 @@
 ﻿
 #include "TitleScene.h"
 #include "../Manager/GameManager.h"
-#include "../Manager/SpriteManager.h"
-#include "../Manager/SoundManager.h"
 
 TitleScene::TitleScene() :
-	currentSelect( 0 ),
+	currentSelection( Menu::NewGame_m ),
 	pointerRadius( 15 )
 {
-	SetFontSize( 48 );
-	SpriteManager::GetInstance()->LoadGraphHandle( GraphName::gTitle );
+	sprIns = SpriteManager::GetInstance();
+	sndIns = SoundManager::GetInstance();
 
-	SoundManager* sndIns = SoundManager::GetInstance();
+	SetFontSize( 48 );
+	sprIns->LoadGraphHandle( GraphName::gTitle );
+
 	sndIns->LoadSoundHandle( SoundName::sSelect );
 	sndIns->LoadSoundHandle( SoundName::sEnter );
 	sndIns->LoadSoundHandle( SoundName::bTitle );
-	PlaySoundMem( sndIns->GetSoundHandle( SoundName::bTitle ), DX_PLAYTYPE_LOOP );
+	PlayBGM( SoundName::bTitle );
 }
 
 TitleScene::~TitleScene() {
@@ -34,10 +34,10 @@ void TitleScene::Control() {
 }
 
 void TitleScene::Draw() {
-	DrawGraph( 0, 0, SpriteManager::GetInstance()->GetGraphHandle( GraphName::gTitle ), false );
+	DrawGraph( 0, 0, sprIns->GetGraphHandle( GraphName::gTitle ), false );
 
 	int offset = 200;
-	for( int i = 0; i < currentSelect; i++ ) offset -= 100;
+	if( currentSelection == Menu::Continue_m ) offset = 100;
 
 	DrawCircle( WINDOW_WIDTH / 2 - 120 , WINDOW_HEIGHT - offset, pointerRadius, Color::red, true );
 	DrawString( WINDOW_WIDTH / 2 - 96, WINDOW_HEIGHT - 200 - 24, "New Game", Color::white );
@@ -47,22 +47,18 @@ void TitleScene::Draw() {
 }
 
 bool TitleScene::SelectMenu(){
-	SoundManager* sndIns = SoundManager::GetInstance();
-
 	if( GetKeyStatus( KEY_INPUT_UP ) == InputState::Pressed ){
-		PlaySoundMem( sndIns->GetSoundHandle( SoundName::sSelect ), DX_PLAYTYPE_BACK );
-		currentSelect--;
-		if( currentSelect <= 0 ) currentSelect = 0;
+		PlaySE( SoundName::sSelect );
+		currentSelection = Menu::NewGame_m;
 	}
 	else if( GetKeyStatus( KEY_INPUT_DOWN ) == InputState::Pressed ){
-		PlaySoundMem( sndIns->GetSoundHandle( SoundName::sSelect ), DX_PLAYTYPE_BACK );
-		currentSelect++;
-		if( currentSelect >= Menu::MenuMax ) currentSelect--;
+		PlaySE( SoundName::sSelect );
+		currentSelection = Menu::Continue_m;
 	}
 
 	if( GetKeyStatus( KEY_INPUT_RETURN ) == InputState::Pressed ){
-		PlaySoundMem( sndIns->GetSoundHandle( SoundName::sEnter ), DX_PLAYTYPE_BACK );
-		if( currentSelect == 0 ) GameManager::GetInstance()->DataSaving( { 0, 0, 0, 0 } );
+		PlaySE( SoundName::sEnter );
+		if( currentSelection == Menu::NewGame_m ) GameManager::GetInstance()->Save( { 0, 0, 0, 0 } );
 		return true;
 	}
 

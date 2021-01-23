@@ -1,21 +1,20 @@
 ﻿
 #include "Player.h"
-#include "../Manager/SpriteManager.h"
-#include "../Manager/SoundManager.h"
 
 Player::Player( CharacterData initData ) :
 	data( initData ),
 	jumpPower( 0 ),
-	isJumped( true ),
-	isDoubleJumped( false ),
+	isJumping( true ),
+	isDoubleJumping( false ),
 	jumpCounter( 0 ),
 	isFlying( false ),
 	previousPos( {} ),
 	previousHit( {} )
 {
+	sndIns = SoundManager::GetInstance();
+
 	pBulletManager = new BulletManager();
 
-	SoundManager* sndIns = SoundManager::GetInstance();
 	sndIns->LoadSoundHandle( SoundName::sJump );
 	sndIns->LoadSoundHandle( SoundName::sDoubleJump );
 	sndIns->LoadSoundHandle( SoundName::sShoot );
@@ -43,16 +42,16 @@ void Player::Move() {
 	}
 
 	if( GetKeyStatus( Key::JUMP ) == InputState::Pressed ) {
-		if( ( isFlying == false || isDoubleJumped == false ) && hitChecker.up == false ){
+		if( ( isFlying == false || isDoubleJumping == false ) && hitChecker.up == false ){
 			data.position.y -= 20;
 			jumpPower = -JUMP_POWER;
 			hitChecker.down = false;
 			if( isFlying == true ){
-				isDoubleJumped = true;
-				PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sDoubleJump ), DX_PLAYTYPE_BACK );
+				isDoubleJumping = true;
+				PlaySE( SoundName::sDoubleJump );
 			}
 			else{
-				PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sJump ), DX_PLAYTYPE_BACK );
+				PlaySE( SoundName::sJump );
 			}
 		}
 	}
@@ -65,7 +64,7 @@ void Player::Move() {
 	}
 	else{
 		isFlying = false;
-		isDoubleJumped = false;
+		isDoubleJumping = false;
 		jumpPower = 0;
 	}
 
@@ -95,7 +94,7 @@ void Player::Jump(){
 }
 
 void Player::Shoot(){
-	PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sShoot ), DX_PLAYTYPE_BACK );
+	PlaySE( SoundName::sShoot );
 	pBulletManager->CreateBullet( data );
 }
 
@@ -148,15 +147,15 @@ ObjectTag Player::Collision( ObjectBase* object_ ){
 		// 当たっている場合
 		switch( object_->GetTag() ){
 		case EmptyBlock_o:
-			PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sBlockDestroy ), DX_PLAYTYPE_BACK );
+			PlaySE( SoundName::sBlockDestroy );
 			object_->Control();
 			break;
 		case SkeletonBlock_o:
-			PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sBlockSpawn ), DX_PLAYTYPE_BACK );
+			PlaySE( SoundName::sBlockSpawn );
 			object_->Control();
 			break;
 		case Sauce_o:
-			isDoubleJumped = false;
+			isDoubleJumping = false;
 			break;
 			// 今のところあたってもなにもない方達
 		case Warp_o: break;

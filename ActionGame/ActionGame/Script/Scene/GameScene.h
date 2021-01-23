@@ -8,6 +8,9 @@
 #include "../Function/Gauge.h"
 #include "../Character/Player.h"
 #include "../Object/ObjectBase.h"
+#include "../Manager/SpriteManager.h"
+#include "../Manager/SoundManager.h"
+#include "../Manager/GameManager.h"
 
 // ゲーム中のシーン
 class GameScene : public SceneBase {
@@ -50,6 +53,9 @@ private:
 	static int stageNumber;
 	static std::vector<std::vector<ObjectBase*>> stageData;
 
+	SpriteManager* sprIns;
+	SoundManager* sndIns;
+	GameManager* gameIns;
 };
 
 #endif

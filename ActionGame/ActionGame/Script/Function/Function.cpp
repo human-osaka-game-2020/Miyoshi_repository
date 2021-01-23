@@ -140,3 +140,16 @@ bool CheckOffWindow( CharacterData data, bool checkRoof ){
 
 	return false;
 }
+
+void PlaySE( SoundName soundName ){
+	int soundHandle = SoundManager::GetInstance()->GetSoundHandle( soundName );
+	PlaySoundMem( soundHandle, DX_PLAYTYPE_BACK );
+}
+
+void PlayBGM( SoundName soundName ){
+	static int soundHandle = 0;
+	// 前のBGMを止めてから
+	StopSoundMem( soundHandle );
+	soundHandle = SoundManager::GetInstance()->GetSoundHandle( soundName );
+	PlaySoundMem( soundHandle, DX_PLAYTYPE_LOOP );
+}

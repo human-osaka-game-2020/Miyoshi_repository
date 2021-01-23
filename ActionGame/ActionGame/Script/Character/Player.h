@@ -6,6 +6,7 @@
 #include "../Function/Function.h"
 #include "../Manager/BulletManager.h"
 #include "../Object/ObjectBase.h"
+#include "../Manager/SoundManager.h"
 
 // プレイヤーに関する変数や処理を管理する
 class Player {
@@ -54,14 +55,16 @@ private:
 	CharacterData data;
 	float jumpPower;
 	int jumpCounter;
-	bool isJumped;
-	bool isDoubleJumped;
+	bool isJumping;
+	bool isDoubleJumping;
 	const float JUMP_POWER = 8;
 	BulletManager* pBulletManager;
 	bool isFlying;
 	Position previousPos;
 	HitData previousHit;
 	HitData hitChecker;
+
+	SoundManager* sndIns;
 };
 
 #endif // !PLAYER_H

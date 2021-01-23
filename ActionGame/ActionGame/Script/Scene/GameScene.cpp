@@ -1,8 +1,5 @@
 ﻿
 #include "GameScene.h"
-#include "../Manager/GameManager.h"
-#include "../Manager/SpriteManager.h"
-#include "../Manager/SoundManager.h"
 #include "../Object/Block.h"
 #include "../Object/Okonomiyaki.h"
 #include "../Object/Sauce.h"
@@ -14,6 +11,10 @@ std::vector<Gauge> GameScene::gaugeList;
 std::vector<std::vector<ObjectBase*>> GameScene::stageData;
 
 GameScene::GameScene() {
+	sprIns = SpriteManager::GetInstance();
+	sndIns = SoundManager::GetInstance();
+	gameIns = GameManager::GetInstance();
+
 	SceneDataLoad();
 	Reset();
 }
@@ -31,7 +32,7 @@ void GameScene::Control() {
 	if ( fadeMode != FadeMode::None ) return;
 
 	if( GetKeyStatus( Key::RESET ) == InputState::Pressed ){
-		PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sReset ), DX_PLAYTYPE_BACK );
+		PlaySE( SoundName::sReset );
 		Reset();
 		return;
 	}
@@ -64,15 +65,13 @@ void GameScene::Draw() {
 		gaugeList.at( i ).Draw();
 	}
 
-	DrawFormatString( 0, 0, Color::red, "Death : %d", GameManager::GetInstance()->GetDeathCounter() );
+	DrawFormatString( 0, 0, Color::red, "Death : %d", gameIns->GetDeathCounter() );
 
 	SceneFade( SceneList::Result, 255 / 60, Color::black );
 }
 
 void GameScene::Reset(){
-	SpriteManager* sprIns = SpriteManager::GetInstance();
-
-	SaveState dataTemp = GameManager::GetInstance()->DataLoading();
+	SaveState dataTemp = gameIns->Load();
 
 	player = new Player( { { dataTemp.x, dataTemp.y }, sprIns->GetGraphData( GraphName::gPlayer ).size, 6,
 	Direction::Right, sprIns->GetGraphHandle( GraphName::gPlayer ) } );
@@ -82,50 +81,36 @@ void GameScene::Reset(){
 
 	for( int y = 0; y < STAGE_HEIGHT; y++ ){
 		for( int x = 0; x < STAGE_WIDTH; x++ ){
-			switch( GameManager::GetInstance()->GetStageData( stageNumber ).at( y ).at( x ) ){
-			case Block_o:
-				stageData.at( y ).at( x ) = new Block( { { x * CHIP_WIDTH, y * CHIP_HEIGHT }, { CHIP_WIDTH, CHIP_HEIGHT },
-					sprIns->GetGraphHandle( GraphName::gBlock ), ObjectTag::Block_o } );
-				break;
-			case EmptyBlock_o:
-				stageData.at( y ).at( x ) = new Block( { { x * CHIP_WIDTH, y * CHIP_HEIGHT }, { CHIP_WIDTH, CHIP_HEIGHT },
-					sprIns->GetGraphHandle( GraphName::gBlock ), ObjectTag::EmptyBlock_o } );
-				break;
-			case SkeletonBlock_o:
-				stageData.at( y ).at( x ) = new Block( { { x * CHIP_WIDTH, y * CHIP_HEIGHT }, { CHIP_WIDTH, CHIP_HEIGHT },
-					0, ObjectTag::SkeletonBlock_o } );
-				break;
-			case Save_o:
-				stageData.at( y ).at( x ) = new Save( { {x * CHIP_WIDTH, y * CHIP_HEIGHT}, {CHIP_WIDTH, CHIP_HEIGHT},
-					sprIns->GetGraphHandle( GraphName::gSave ), ObjectTag::Save_o } );
-				break;
+			Position drawPos = { x * CHIP_WIDTH, y * CHIP_HEIGHT };
+			Size chipSize = { CHIP_WIDTH, CHIP_HEIGHT };
+			ObjectTag objTag = gameIns->GetStageData( stageNumber ).at( y ).at( x );
+
+			switch( objTag ){
+			case Block_o: stageData.at( y ).at( x ) =			new Block( { drawPos, chipSize, sprIns->GetGraphHandle( GraphName::gBlock ), objTag } ); break;
+			case EmptyBlock_o: stageData.at( y ).at( x ) =		new Block( { drawPos, chipSize, sprIns->GetGraphHandle( GraphName::gBlock ), objTag } ); break;
+			case SkeletonBlock_o: stageData.at( y ).at( x ) =	new Block( { drawPos, chipSize, 0, objTag } ); break;
+			case Save_o: stageData.at( y ).at( x ) =		 	 new Save( { drawPos, chipSize, sprIns->GetGraphHandle( GraphName::gSave ), objTag } ); break;
 			case Okonomiyaki_o:
-				stageData.at( y ).at( x ) = new Okonomiyaki( { {x * CHIP_WIDTH + 18, y * CHIP_HEIGHT + 18}, {CHIP_WIDTH - 36, CHIP_HEIGHT - 36},
-					sprIns->GetGraphHandle( GraphName::gOkonomiyaki ), ObjectTag::Okonomiyaki_o } );
-				break;
-			case Sauce_o:
-				stageData.at( y ).at( x ) = new Sauce( { {x * CHIP_WIDTH, y * CHIP_HEIGHT },{CHIP_WIDTH, CHIP_HEIGHT},
-					sprIns->GetGraphHandle( GraphName::gSauce ), ObjectTag::Sauce_o } );
-				break;
-			case Warp_o:
-				stageData.at( y ).at( x ) = new Warp( { {x * CHIP_WIDTH, y * CHIP_HEIGHT}, {CHIP_WIDTH, CHIP_HEIGHT},
-					sprIns->GetGraphHandle( GraphName::gWarp ), ObjectTag::Warp_o } );
-				break;
+			{
+				float offsetX = 18;
+				float offsetY = 18;
+				drawPos.x += offsetX;
+				drawPos.y += offsetY;
+				chipSize.width -= offsetX * 2;
+				chipSize.height -= offsetY * 2;
+			}
+			stageData.at( y ).at( x ) =			  new Okonomiyaki( { drawPos, chipSize, sprIns->GetGraphHandle( GraphName::gOkonomiyaki ), objTag } ); break;
+			case Sauce_o: stageData.at( y ).at( x ) =	new Sauce( { drawPos, chipSize, sprIns->GetGraphHandle( GraphName::gSauce ), objTag } ); break;
+			case Warp_o: stageData.at( y ).at( x ) =	 new Warp( { drawPos, chipSize, sprIns->GetGraphHandle( GraphName::gWarp ), objTag } ); break;
 			case Air_o:
-			default:
-				stageData.at( y ).at( x ) = nullptr;
-				break;
+			default: stageData.at( y ).at( x ) = nullptr;  break;
 			}
 		}
 	}
-	StopSoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::bGame ) );
-	StopSoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::sGameOver ) );
-	PlaySoundMem( SoundManager::GetInstance()->GetSoundHandle( SoundName::bGame ), DX_PLAYTYPE_LOOP );
+	PlayBGM( SoundName::bGame );
 }
 
 void GameScene::Collision(){
-	SoundManager* sndIns = SoundManager::GetInstance();
-
 	for( int y = 0; y < STAGE_HEIGHT; y++ ){
 		for( int x = 0; x < STAGE_WIDTH; x++ ){
 			if( stageData.at( y ).at( x ) != nullptr ){
@@ -135,15 +120,14 @@ void GameScene::Collision(){
 				// プレイヤー判定
 				switch( player->Collision( stageData.at( y ).at( x ) )){
 				case ObjectTag::Okonomiyaki_o:
-					GameManager::GetInstance()->AddDeathCounter();
-					StopSoundMem( sndIns->GetSoundHandle( SoundName::bGame ) );
-					PlaySoundMem( sndIns->GetSoundHandle( SoundName::sDeath ), DX_PLAYTYPE_BACK );
-					PlaySoundMem( sndIns->GetSoundHandle( SoundName::sGameOver ), DX_PLAYTYPE_BACK );
+					gameIns->AddDeathCounter();
+					PlaySE( SoundName::sDeath );
+					PlayBGM( SoundName::sGameOver );
 					delete player;
 					player = nullptr;
 					return;
 				case ObjectTag::Warp_o:
-					PlaySoundMem( sndIns->GetSoundHandle( SoundName::sWarp ), DX_PLAYTYPE_BACK );
+					PlaySE( SoundName::sWarp );
 					NextStage();
 					return;
 				}
@@ -154,17 +138,16 @@ void GameScene::Collision(){
 
 void GameScene::NextStage(){
 	stageNumber++;
-	if( stageNumber >= GameManager::GetInstance()->GetStageMax() ){
+	if( stageNumber >= gameIns->GetStageMax() ){
 		fadeMode = FadeMode::Out;
 		return;
 	}
 
-	GameManager::GetInstance()->DataSaving( { 0,0,stageNumber, GameManager::GetInstance()->GetDeathCounter() } );
+	gameIns->Save( { 0,0,stageNumber, gameIns->GetDeathCounter() } );
 	Reset();
 }
 
 void GameScene::SceneDataLoad(){
-	SpriteManager* sprIns = SpriteManager::GetInstance();
 	sprIns->LoadGraphHandle( GraphName::gPlayer );
 	sprIns->LoadGraphHandle( GraphName::gBullet );
 	sprIns->LoadGraphHandle( GraphName::gBlock );
@@ -174,7 +157,6 @@ void GameScene::SceneDataLoad(){
 	sprIns->LoadGraphHandle( GraphName::gSave );
 	sprIns->LoadGraphHandle( GraphName::gWarp );
 
-	SoundManager* sndIns = SoundManager::GetInstance();
 	sndIns->LoadSoundHandle( SoundName::sBlockDestroy );
 	sndIns->LoadSoundHandle( SoundName::sBlockSpawn );
 	sndIns->LoadSoundHandle( SoundName::sDeath );
@@ -183,6 +165,6 @@ void GameScene::SceneDataLoad(){
 	sndIns->LoadSoundHandle( SoundName::bGame );
 	sndIns->LoadSoundHandle( SoundName::sGameOver );
 
-	stageNumber = GameManager::GetInstance()->DataLoading().stageNumber;
-	GameManager::GetInstance()->SetDeathCounter( GameManager::GetInstance()->DataLoading().deathCount );
+	stageNumber = gameIns->Load().stageNumber;
+	gameIns->SetDeathCounter( gameIns->Load().deathCount );
 }
