@@ -4,7 +4,6 @@
 
 #include "../Common.h"
 #include "../Singleton.h"
-
 #include "../Character/Player.h"
 
 struct SaveState{
@@ -28,10 +27,10 @@ public:
 	int GetStageMax() const { return stageData.size(); }
 
 	// セーブ
-	void DataSaving( SaveState data_ );
+	void Save( SaveState data_ );
 
 	// ロード
-	SaveState DataLoading();
+	SaveState Load();
 
 	void AddDeathCounter();
 	int GetDeathCounter() const { return deathCounter; }
@@ -40,7 +39,6 @@ public:
 private:
 	std::vector<std::vector<std::vector<ObjectTag>>> stageData;
 	int deathCounter;
-
 };
 
 #endif // !GAME_MANAGER_H

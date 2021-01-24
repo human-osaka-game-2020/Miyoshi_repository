@@ -3,6 +3,7 @@
 #define FUNCTION_H
 
 #include "../Common.h"
+#include "../Manager/SoundManager.h"
 
 // フェードの状態
 enum class FadeMode {
@@ -100,5 +101,13 @@ void SwitchEnabledMouseButtonInput( int mouseButtonCode );
 /// @param checkRoof 天井を判定するか
 /// @return 画面外ならtrue
 bool CheckOffWindow( CharacterData data, bool checkRoof = true );
+
+/// @brief 音を DX_PLAYTYPE_BACK で鳴らす
+/// @param soundHandle 音のハンドル
+void PlaySE( SoundName soundName );
+
+/// @brief 音を DX_PLAYTYPE_LOOP で鳴らす
+/// @param soundHandle 音のハンドル
+void PlayBGM( SoundName soundName );
 
 #endif // !FUNCTION_H
